@@ -42,7 +42,7 @@ function Header() {
 
   const className = [
     'header',
-    onHero && !open ? 'on-dark' : 'solid',
+    onHero ? 'on-dark' : 'solid',
     open ? 'open' : '',
   ]
     .filter(Boolean)

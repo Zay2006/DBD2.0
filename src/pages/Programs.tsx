@@ -74,6 +74,7 @@ export default function Programs() {
             <img
               src="/images/finding-niche.jpg"
               alt="Cover for Finding My Niche photography class"
+              className="contain"
             />
           </article>
         </div>

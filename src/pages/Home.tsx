@@ -78,7 +78,7 @@ export default function Home() {
               Full archive
             </Link>
           </div>
-          <WorkGrid limit={6} tallFirst />
+          <WorkGrid limit={6} />
         </div>
       </section>
 
@@ -105,6 +105,7 @@ export default function Home() {
           <img
             src="/images/story-cards.jpg"
             alt="Story Driven board game with challenge, genre, and practice cards"
+            className="contain"
           />
         </div>
       </section>

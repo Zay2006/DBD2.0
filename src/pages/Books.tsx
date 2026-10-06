@@ -14,8 +14,9 @@ export default function Books() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap split">
           <img
-            src="/images/book-cover.jpg"
-            alt="Paperback of I Found a Reason to Speak: Oneness for a Generation"
+            src="/images/book-ifound.jpg"
+            alt="Cover of I Found a Reason to Speak: Oneness for a Generation"
+            className="contain"
           />
           <div>
             <p className="kicker">2024</p>

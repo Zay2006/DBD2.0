@@ -53,6 +53,7 @@ export default function StoryDriven() {
           <img
             src="/images/story-cards.jpg"
             alt="Story Driven board and cards"
+            className="contain"
           />
           <div>
             <p className="kicker">The tabletop game</p>
