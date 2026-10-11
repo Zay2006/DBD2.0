@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
-import { site } from '../data/site'
+import { asset, site } from '../data/site'
 
 export default function Books() {
   return (
@@ -14,7 +14,7 @@ export default function Books() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap split">
           <img
-            src="/images/book-ifound.jpg"
+            src={asset('/images/book-ifound.jpg')}
             alt="Cover of I Found a Reason to Speak: Oneness for a Generation"
             className="contain"
           />
@@ -61,7 +61,7 @@ export default function Books() {
             </p>
           </div>
           <img
-            src="/images/book-signing.jpg"
+            src={asset('/images/book-signing.jpg')}
             alt="Guests at the first book signing in December 2024"
           />
         </div>

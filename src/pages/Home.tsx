@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 import WorkGrid from '../components/WorkGrid'
-import { partners, site, testimonials } from '../data/site'
+import { asset, partners, site, testimonials } from '../data/site'
 
 export default function Home() {
   return (
     <main id="main">
       <section className="hero">
         <img
-          src="/images/hero-loc.jpg"
+          src={asset('/images/hero-loc.jpg')}
           alt="Community members soul line dancing, photographed for the Library of Congress"
         />
         <div className="hero-copy">
@@ -103,7 +103,7 @@ export default function Home() {
             </div>
           </div>
           <img
-            src="/images/story-cards.jpg"
+            src={asset('/images/story-cards.jpg')}
             alt="Story Driven board game with challenge, genre, and practice cards"
             className="contain"
           />

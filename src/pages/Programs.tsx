@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
+import { asset } from '../data/site'
 
 export default function Programs() {
   return (
@@ -30,7 +31,7 @@ export default function Programs() {
               </p>
             </div>
             <img
-              src="/images/avs.jpg"
+              src={asset('/images/avs.jpg')}
               alt="Students at Cooper's Poynt rehearsing their visual story"
             />
           </article>
@@ -47,7 +48,7 @@ export default function Programs() {
               </p>
             </div>
             <img
-              src="/images/hancock.jpg"
+              src={asset('/images/hancock.jpg')}
               alt="Youth standing for a documentary portrait"
             />
           </article>
@@ -72,7 +73,7 @@ export default function Programs() {
               </div>
             </div>
             <img
-              src="/images/finding-niche.jpg"
+              src={asset('/images/finding-niche.jpg')}
               alt="Cover for Finding My Niche photography class"
               className="contain"
             />

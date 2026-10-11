@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
+import { asset } from '../data/site'
 
 const faqs = [
   {
@@ -51,7 +52,7 @@ export default function StoryDriven() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap split">
           <img
-            src="/images/story-cards.jpg"
+            src={asset('/images/story-cards.jpg')}
             alt="Story Driven board and cards"
             className="contain"
           />
@@ -101,7 +102,7 @@ export default function StoryDriven() {
             </p>
           </div>
           <img
-            src="/images/story-life.jpg"
+            src={asset('/images/story-life.jpg')}
             alt="Life-sized Story Driven board on a lawn"
           />
         </div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { asset } from '../data/site'
 import InquiryForm from '../components/InquiryForm'
 import PageHero from '../components/PageHero'
 
@@ -23,7 +24,7 @@ export default function Hire() {
               Commercial days are billed as a day rate plus licensing. Retouching beyond color, crop, and sort is additional. Travel up to 25 miles is included, excluding tolls. Same-day delivery is an additional $300.
             </p>
           </div>
-          <img src="/images/headshots.jpg" alt="Professional outdoor headshot" />
+          <img src={asset('/images/headshots.jpg')} alt="Professional outdoor headshot" />
         </div>
       </section>
 
@@ -40,7 +41,7 @@ export default function Hire() {
             </p>
           </div>
           <img
-            src="/images/hancock.jpg"
+            src={asset('/images/hancock.jpg')}
             alt="Documentary still from a youth film project"
           />
         </div>

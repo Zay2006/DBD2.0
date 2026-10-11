@@ -16,6 +16,8 @@ The original site mixed a personal résumé timeline, unfinished shop pages, and
 - `/about` Biography, selected timeline, testimonials
 - `/contact` Inquiry form
 
+Live preview: https://zay2006.github.io/DBD2.0/
+
 ## Run locally
 
 ```bash

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
-import { partners, testimonials, timeline } from '../data/site'
+import { asset, partners, testimonials, timeline } from '../data/site'
 
 export default function About() {
   return (
@@ -14,7 +14,7 @@ export default function About() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap split">
           <img
-            src="/images/michael.jpg"
+            src={asset('/images/michael.jpg')}
             alt="Michael L. Clay seated outdoors in profile"
           />
           <div>

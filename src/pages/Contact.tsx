@@ -1,6 +1,6 @@
 import InquiryForm from '../components/InquiryForm'
 import PageHero from '../components/PageHero'
-import { site } from '../data/site'
+import { asset, site } from '../data/site'
 
 export default function Contact() {
   return (
@@ -34,7 +34,7 @@ export default function Contact() {
               Say who you are, the date if you have one, and what the story needs to do in the world. Michael will write back.
             </p>
             <img
-              src="/images/michael.jpg"
+              src={asset('/images/michael.jpg')}
               alt="Michael L. Clay"
               style={{ marginTop: '1.5rem', maxHeight: '28rem', objectFit: 'cover' }}
             />
