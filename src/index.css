@@ -202,11 +202,18 @@ p:last-child {
 }
 
 .header.site-bar .header-inner {
-  width: min(1240px, calc(100% - 1.5rem));
+  width: min(1320px, calc(100% - 1.75rem));
+  justify-content: flex-start;
+  gap: 2rem;
 }
 
 .header.site-bar .brand {
   min-width: 0;
+}
+
+.header.site-bar .nav {
+  flex: 1;
+  justify-content: space-between;
 }
 
 .header.site-bar .site-logo {
