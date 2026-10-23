@@ -1,20 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { asset, mapNodes, partners, testimonials } from '../data/site'
+import { useEffect, useMemo, useRef, useState, type PointerEvent } from 'react'
+import { asset, mapClusters, mapNodes, site } from '../data/site'
 
 const INTRO_SRC = asset('/audio/dbd-intro.mp3')
-const INTRO_KEY = 'dbd-intro-seen'
-
-const NODE_POINTS: Record<string, { x: number; y: number }> = {
-  about: { x: 50, y: 18 },
-  work: { x: 18, y: 28 },
-  hire: { x: 82, y: 28 },
-  programs: { x: 11, y: 52 },
-  story: { x: 89, y: 52 },
-  books: { x: 20, y: 74 },
-  shop: { x: 80, y: 74 },
-  contact: { x: 50, y: 84 },
-}
+const HERO_SRC = asset('/images/hero-loc.jpg')
+const RING = 2 * Math.PI * 21
 
 function formatTime(seconds: number) {
   if (!Number.isFinite(seconds) || seconds < 0) return '0:00'
@@ -23,16 +12,52 @@ function formatTime(seconds: number) {
   return `${mins}:${secs.toString().padStart(2, '0')}`
 }
 
+function branchPath(x: number, y: number) {
+  const midX = 50 + (x - 50) * 0.34
+  const midY = y < 50 ? y + 9 : y - 9
+  return `M 50 50 Q ${midX.toFixed(2)} ${midY.toFixed(2)} ${x} ${y}`
+}
+
 export default function Home() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const [gateOpen, setGateOpen] = useState(() => {
-    if (typeof window === 'undefined') return true
-    return sessionStorage.getItem(INTRO_KEY) !== '1'
-  })
+  const stageRef = useRef<HTMLElement | null>(null)
+  const [ready, setReady] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(false)
   const [current, setCurrent] = useState(0)
   const [duration, setDuration] = useState(74)
+  const [hovered, setHovered] = useState<string | null>(null)
+  const [pointer, setPointer] = useState({ x: 0, y: 0 })
+  const [reduceMotion, setReduceMotion] = useState(false)
+
+  const active = mapNodes.find((node) => node.id === hovered) ?? null
+  const progress = duration > 0 ? Math.min(current / duration, 1) : 0
+
+  const dust = useMemo(
+    () =>
+      Array.from({ length: 10 }, (_, i) => ({
+        id: i,
+        x: 8 + ((i * 17) % 84),
+        y: 10 + ((i * 23) % 78),
+        delay: (i * 0.7) % 6,
+        duration: 10 + (i % 5) * 2,
+      })),
+    [],
+  )
+
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const sync = () => setReduceMotion(media.matches)
+    sync()
+    media.addEventListener('change', sync)
+    const enter = window.setTimeout(() => setReady(true), 40)
+    document.body.classList.add('on-home')
+    return () => {
+      media.removeEventListener('change', sync)
+      window.clearTimeout(enter)
+      document.body.classList.remove('on-home')
+    }
+  }, [])
 
   useEffect(() => {
     const audio = audioRef.current
@@ -64,26 +89,13 @@ export default function Home() {
     }
   }, [])
 
-  function markSeen() {
-    sessionStorage.setItem(INTRO_KEY, '1')
-    setGateOpen(false)
-  }
-
-  async function playIntro() {
-    markSeen()
-    const audio = audioRef.current
-    if (!audio) return
-    audio.currentTime = 0
-    try {
-      await audio.play()
-    } catch {
-      setPlaying(false)
-    }
-  }
-
-  function skipIntro() {
-    audioRef.current?.pause()
-    markSeen()
+  function onPointerMove(event: PointerEvent<HTMLElement>) {
+    if (reduceMotion || window.innerWidth <= 960) return
+    const rect = event.currentTarget.getBoundingClientRect()
+    setPointer({
+      x: (event.clientX - rect.left) / rect.width - 0.5,
+      y: (event.clientY - rect.top) / rect.height - 0.5,
+    })
   }
 
   async function togglePlay() {
@@ -107,146 +119,143 @@ export default function Home() {
     setMuted(audio.muted)
   }
 
+  const bgShift = reduceMotion
+    ? undefined
+    : {
+        transform: `translate3d(${pointer.x * -18}px, ${pointer.y * -14}px, 0) scale(1.08)`,
+      }
+
   return (
-    <main id="main" className="home-map">
+    <main
+      id="main"
+      ref={stageRef}
+      className={[
+        'home-stage',
+        ready ? 'is-ready' : '',
+        playing ? 'is-playing' : '',
+        active ? 'is-focused' : '',
+        reduceMotion ? 'reduce-motion' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      onPointerMove={onPointerMove}
+      onPointerLeave={() => {
+        setHovered(null)
+        setPointer({ x: 0, y: 0 })
+      }}
+    >
       <audio ref={audioRef} src={INTRO_SRC} preload="auto" />
 
-      {gateOpen ? (
-        <section className="intro-gate" aria-label="Studio introduction">
+      <div className="stage-bg" style={bgShift}>
+        <img src={HERO_SRC} alt="" className={active ? 'is-dim' : 'is-live'} />
+        {mapNodes.map((node) => (
           <img
-            src={asset('/images/hero-loc.jpg')}
-            alt="Community members soul line dancing, photographed for the Library of Congress"
-          />
-          <div className="intro-gate-copy">
-            <p className="museum-label">Driven by Design · 1:14</p>
-            <h1>Listen first.</h1>
-            <p className="lede">
-              A one-minute introduction from Michael Clay, then a map of every door in the studio.
-            </p>
-            <div className="btn-row">
-              <button type="button" className="btn" onClick={() => void playIntro()}>
-                Play the intro
-              </button>
-              <button type="button" className="btn ghost" onClick={skipIntro}>
-                Skip to the map
-              </button>
-            </div>
-          </div>
-        </section>
-      ) : (
-        <section className="mindmap" aria-label="Studio mind map">
-          <img
-            className="mindmap-bg"
-            src={asset('/images/hero-loc.jpg')}
+            key={node.id}
+            src={node.image}
             alt=""
+            className={active?.id === node.id ? 'is-live' : ''}
           />
-          <svg className="mindmap-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            {mapNodes.map((node) => {
-              const point = NODE_POINTS[node.id]
-              if (!point) return null
-              return (
-                <path
-                  key={node.id}
-                  d={`M 50 50 Q ${50 + (point.x - 50) * 0.35} ${point.y < 50 ? point.y + 8 : point.y - 8} ${point.x} ${point.y}`}
-                />
-              )
-            })}
-          </svg>
+        ))}
+      </div>
+      <div className="stage-veil" />
+      <div className="stage-dust" aria-hidden="true">
+        {dust.map((spec) => (
+          <span
+            key={spec.id}
+            style={{
+              left: `${spec.x}%`,
+              top: `${spec.y}%`,
+              animationDelay: `${spec.delay}s`,
+              animationDuration: `${spec.duration}s`,
+            }}
+          />
+        ))}
+      </div>
 
-          <div className="mindmap-hub">
+      <section className="mindmap" aria-label="Studio mind map">
+        <svg className="mindmap-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {mapNodes.map((node, index) => (
+            <path
+              key={node.id}
+              d={branchPath(node.x, node.y)}
+              pathLength={1}
+              className={active?.id === node.id ? 'is-active' : ''}
+              style={{ animationDelay: `${180 + index * 70}ms` }}
+            />
+          ))}
+        </svg>
+
+        <div className="map-hub">
+          <div className="hub-ring" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <circle className="hub-ring-track" cx="24" cy="24" r="21" />
+              <circle
+                className="hub-ring-progress"
+                cx="24"
+                cy="24"
+                r="21"
+                style={{ strokeDashoffset: RING * (1 - (playing ? progress : 0)) }}
+              />
+            </svg>
             <span className="brand-mark">DBD</span>
-            <p className="kicker">The studio</p>
-            <h1>Driven by Design</h1>
-            <p>Pick a branch. Every path is a way into the work.</p>
           </div>
-
-          {mapNodes.map((node) => {
-            const point = NODE_POINTS[node.id]
-            const className = `mindmap-node mindmap-node-${node.id}`
-            const body = (
-              <>
-                <span className="kicker">{node.kicker}</span>
-                <strong>{node.label}</strong>
-                <span>{node.hint}</span>
-              </>
-            )
-            const style = {
-              left: `${point.x}%`,
-              top: `${point.y}%`,
-            }
-            if (node.href) {
-              return (
-                <a
-                  key={node.id}
-                  className={className}
-                  style={style}
-                  href={node.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {body}
-                </a>
-              )
-            }
-            return (
-              <Link key={node.id} className={className} style={style} to={node.to ?? '/'}>
-                {body}
-              </Link>
-            )
-          })}
-
-          <div className="audio-dock">
-            <button type="button" className="chip" onClick={() => void togglePlay()}>
-              {playing ? 'Pause intro' : 'Play intro'}
+          <p className="kicker">{active ? active.kicker : 'The studio'}</p>
+          <h1>Driven by Design</h1>
+          <p className="hub-line">
+            {active
+              ? active.hint
+              : 'A living map of the current studio. Pick a branch, or hear Michael first.'}
+          </p>
+          <div className="hub-audio">
+            <button
+              type="button"
+              className="intro-play"
+              onClick={() => void togglePlay()}
+              aria-pressed={playing}
+            >
+              {playing ? 'Pause intro' : 'Play the intro'}
             </button>
             <span className="audio-time">
               {formatTime(current)} / {formatTime(duration)}
             </span>
-            <button type="button" className="chip" onClick={toggleMute}>
+            <button type="button" className="hub-chip" onClick={toggleMute}>
               {muted ? 'Unmute' : 'Mute'}
             </button>
           </div>
-        </section>
-      )}
-
-      <section className="section alt">
-        <div className="wrap">
-          <div className="section-head">
-            <div>
-              <p className="kicker">From the people in the room</p>
-              <h2>Proof, not adjectives.</h2>
-            </div>
-          </div>
-          <div className="quotes">
-            {testimonials.slice(0, 3).map((item) => (
-              <blockquote className="quote" key={item.name}>
-                <p>“{item.quote}”</p>
-                <footer>
-                  <strong>{item.name}</strong>
-                  {item.role}
-                </footer>
-              </blockquote>
-            ))}
-          </div>
         </div>
-      </section>
 
-      <section className="section ink">
-        <div className="wrap cta-band">
-          <div>
-            <p className="kicker">Places the work has lived</p>
-            <h2>Smithsonian. Library of Congress. Your classroom next.</h2>
-            <div className="partners" style={{ marginTop: '1.4rem' }}>
-              {partners.map((name) => (
-                <span key={name}>{name}</span>
+        {mapClusters.map((cluster) => (
+          <div className={`map-cluster map-cluster-${cluster.id}`} key={cluster.id}>
+            <p className="cluster-label">{cluster.label}</p>
+            {mapNodes
+              .filter((node) => node.cluster === cluster.id)
+              .map((node, index) => (
+                <a
+                  key={node.id}
+                  className={`mindmap-node mindmap-node-${node.id}${active?.id === node.id ? ' is-active' : ''}`}
+                  href={node.href}
+                  style={{
+                    left: `${node.x}%`,
+                    top: `${node.y}%`,
+                    animationDelay: `${280 + index * 80}ms`,
+                  }}
+                  onPointerEnter={() => setHovered(node.id)}
+                  onFocus={() => setHovered(node.id)}
+                  onPointerLeave={() => setHovered((id) => (id === node.id ? null : id))}
+                  onBlur={() => setHovered((id) => (id === node.id ? null : id))}
+                >
+                  <span className="kicker">{node.kicker}</span>
+                  <strong>{node.label}</strong>
+                  <span>{node.hint}</span>
+                </a>
               ))}
-            </div>
           </div>
-          <Link className="btn" to="/contact">
-            Start a project
-          </Link>
-        </div>
+        ))}
       </section>
+
+      <p className="stage-note">
+        Opens pages on {site.live.replace('https://', '')}
+      </p>
     </main>
   )
 }

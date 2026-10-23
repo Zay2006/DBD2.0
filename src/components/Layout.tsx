@@ -27,7 +27,8 @@ function Header() {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const onHero = pathname === '/' && !scrolled
+  const isHome = pathname === '/'
+  const onHero = isHome && !scrolled
 
   useEffect(() => {
     setOpen(false)
@@ -43,6 +44,7 @@ function Header() {
   const className = [
     'header',
     onHero ? 'on-dark' : 'solid',
+    isHome ? 'home-lite' : '',
     open ? 'open' : '',
   ]
     .filter(Boolean)
@@ -58,31 +60,39 @@ function Header() {
             <span>Creative Agency</span>
           </span>
         </NavLink>
-        <button
-          type="button"
-          className="menu-toggle"
-          aria-expanded={open}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span />
-        </button>
-        <nav className="nav" aria-label="Primary">
-          {nav.map((item) =>
-            item.href ? (
-              <a key={item.label} href={item.href} target="_blank" rel="noreferrer">
-                {item.label}
-              </a>
-            ) : (
-              <NavLink key={item.to} to={item.to ?? '/'}>
-                {item.label}
-              </NavLink>
-            ),
-          )}
-          <Link to="/contact" className="btn" style={{ color: '#fffaf3' }}>
+        {isHome ? (
+          <a className="btn" href={`${site.live}/contact/`} style={{ color: '#fffaf3' }}>
             Let's talk
-          </Link>
-        </nav>
+          </a>
+        ) : (
+          <>
+            <button
+              type="button"
+              className="menu-toggle"
+              aria-expanded={open}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              onClick={() => setOpen((v) => !v)}
+            >
+              <span />
+            </button>
+            <nav className="nav" aria-label="Primary">
+              {nav.map((item) =>
+                item.href ? (
+                  <a key={item.label} href={item.href} target="_blank" rel="noreferrer">
+                    {item.label}
+                  </a>
+                ) : (
+                  <NavLink key={item.to} to={item.to ?? '/'}>
+                    {item.label}
+                  </NavLink>
+                ),
+              )}
+              <Link to="/contact" className="btn" style={{ color: '#fffaf3' }}>
+                Let's talk
+              </Link>
+            </nav>
+          </>
+        )}
       </div>
     </header>
   )
@@ -155,6 +165,7 @@ function Footer() {
 }
 
 export default function Layout() {
+  const { pathname } = useLocation()
   return (
     <>
       <ScrollToTop />
@@ -163,7 +174,7 @@ export default function Layout() {
       </a>
       <Header />
       <Outlet />
-      <Footer />
+      {pathname === '/' ? null : <Footer />}
     </>
   )
 }

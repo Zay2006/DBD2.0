@@ -193,6 +193,16 @@ p:last-child {
   background: linear-gradient(to bottom, rgba(20, 17, 15, 0.55), transparent);
 }
 
+.header.home-lite {
+  pointer-events: none;
+}
+
+.header.home-lite .header-inner,
+.header.home-lite .brand,
+.header.home-lite .btn {
+  pointer-events: auto;
+}
+
 .header.solid {
   position: sticky;
   color: var(--ink);
@@ -941,51 +951,79 @@ img.contain {
   }
 }
 
-.intro-gate,
-.mindmap {
+body.on-home {
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.home-stage {
   position: relative;
   min-height: 100svh;
   color: var(--paper);
   overflow: hidden;
   background: var(--ink);
-  padding-bottom: 3.5rem;
 }
 
-.intro-gate img,
-.mindmap-bg {
+.stage-bg {
+  position: absolute;
+  inset: -4%;
+  z-index: 0;
+  transition: transform 0.6s ease-out;
+  will-change: transform;
+}
+
+.stage-bg img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.7s ease;
 }
 
-.intro-gate::after,
-.mindmap::after {
-  content: '';
+.stage-bg img.is-live {
+  opacity: 1;
+}
+
+.stage-bg img.is-dim {
+  opacity: 0;
+}
+
+.home-stage.is-ready:not(.is-focused):not(.reduce-motion) .stage-bg img.is-live {
+  animation: kenburns 28s ease-in-out alternate infinite;
+}
+
+.stage-veil {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 50% 48%, rgba(20, 17, 15, 0.28), rgba(20, 17, 15, 0.78) 62%),
-    linear-gradient(to top, rgba(20, 17, 15, 0.88), rgba(20, 17, 15, 0.28) 50%);
-}
-
-.intro-gate-copy {
-  position: relative;
   z-index: 1;
-  width: min(1180px, calc(100% - 2.5rem));
-  margin: 0 auto;
-  padding: 8rem 0 4.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: 100svh;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(20, 17, 15, 0.18), rgba(20, 17, 15, 0.72) 58%),
+    linear-gradient(to top, rgba(20, 17, 15, 0.9), rgba(20, 17, 15, 0.22) 52%);
+  pointer-events: none;
 }
 
-.intro-gate h1,
-.mindmap-hub h1 {
-  font-size: clamp(2.6rem, 7vw, 5.4rem);
-  max-width: 12ch;
+.stage-dust {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.stage-dust span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(244, 239, 230, 0.42);
+  animation: drift 12s linear infinite;
+}
+
+.mindmap {
+  position: relative;
+  z-index: 3;
+  min-height: 100svh;
 }
 
 .mindmap-lines {
@@ -993,101 +1031,153 @@ img.contain {
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
   pointer-events: none;
 }
 
 .mindmap-lines path {
   fill: none;
   stroke: var(--gold);
-  stroke-width: 0.18;
-  opacity: 0.7;
+  stroke-width: 0.2;
+  opacity: 0.55;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: opacity 0.35s ease, stroke 0.35s ease, stroke-width 0.35s ease;
 }
 
-.mindmap-hub,
-.mindmap-node,
-.audio-dock {
-  position: relative;
-  z-index: 2;
+.home-stage.is-ready .mindmap-lines path {
+  animation: draw-branch 1.15s ease forwards;
 }
 
-.mindmap-hub {
+.home-stage.is-focused .mindmap-lines path {
+  opacity: 0.12;
+}
+
+.home-stage.is-focused .mindmap-lines path.is-active {
+  opacity: 1;
+  stroke: var(--clay);
+  stroke-width: 0.32;
+}
+
+.map-cluster {
+  display: contents;
+}
+
+.cluster-label {
+  display: none;
+}
+
+.map-hub {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: min(22rem, 70vw);
+  width: min(23.5rem, 72vw);
   text-align: center;
-  padding: 1.4rem 1.2rem;
-  background: rgba(20, 17, 15, 0.62);
-  border: 1px solid rgba(244, 239, 230, 0.18);
-  backdrop-filter: blur(10px);
-}
-
-.mindmap-hub .brand-mark {
-  margin: 0 auto 0.7rem;
-  border-color: var(--paper);
-}
-
-.mindmap-hub p {
-  color: rgba(244, 239, 230, 0.8);
-}
-
-.mindmap-node {
-  display: block;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  width: min(11.5rem, 34vw);
-  padding: 0.85rem 0.9rem;
-  background: rgba(255, 250, 243, 0.94);
-  color: var(--ink);
-  text-decoration: none;
-  border: 1px solid rgba(244, 239, 230, 0.18);
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.mindmap-node:hover {
-  transform: translate(-50%, -56%);
-  border-color: var(--clay);
-}
-
-.mindmap-node .kicker {
-  margin-bottom: 0.25rem;
-}
-
-.mindmap-node strong {
-  display: block;
-  font-family: var(--serif);
-  font-size: 1.2rem;
-  font-weight: 550;
-}
-
-.mindmap-node span:last-child {
-  display: block;
-  margin-top: 0.2rem;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-.audio-dock {
-  position: absolute;
-  left: 50%;
-  bottom: 0.7rem;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.4rem 0.5rem;
-  background: rgba(20, 17, 15, 0.7);
+  padding: 1.35rem 1.2rem 1.15rem;
+  background: rgba(20, 17, 15, 0.66);
   border: 1px solid rgba(244, 239, 230, 0.16);
+  backdrop-filter: blur(14px);
+  z-index: 4;
+  opacity: 0;
 }
 
-.audio-dock .chip {
+.home-stage.is-ready .map-hub {
+  opacity: 1;
+  animation: bloom-hub 0.8s ease 0.05s backwards;
+}
+
+.home-stage.is-playing .map-hub {
+  box-shadow: 0 0 0 1px rgba(196, 165, 116, 0.35), 0 18px 50px rgba(20, 17, 15, 0.35);
+}
+
+.hub-ring {
+  width: 4.4rem;
+  height: 4.4rem;
+  margin: 0 auto 0.75rem;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.hub-ring svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.hub-ring circle {
+  fill: none;
+  stroke-width: 1.6;
+}
+
+.hub-ring-track {
+  stroke: rgba(244, 239, 230, 0.2);
+}
+
+.hub-ring-progress {
+  stroke: var(--gold);
+  stroke-dasharray: 131.95;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.2s linear;
+}
+
+.hub-ring .brand-mark {
+  border-color: var(--paper);
+  width: 2.6rem;
+  height: 2.6rem;
+}
+
+.home-stage.is-playing .hub-ring .brand-mark {
+  animation: pulse-mark 2.4s ease-in-out infinite;
+}
+
+.map-hub h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  max-width: 12ch;
+  margin: 0 auto;
+}
+
+.map-hub .hub-line {
+  color: rgba(244, 239, 230, 0.8);
+  min-height: 2.8em;
+  margin: 0.65rem 0 0;
+  transition: color 0.3s ease;
+}
+
+.hub-audio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.intro-play {
+  min-height: 2.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 0;
+  background: var(--clay);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.intro-play:hover {
+  background: var(--clay-deep);
+}
+
+.hub-chip {
+  min-height: 2.2rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(244, 239, 230, 0.35);
+  background: transparent;
   color: var(--paper);
-  border-color: rgba(244, 239, 230, 0.35);
+  cursor: pointer;
 }
 
-.audio-dock .chip:hover {
+.hub-chip:hover {
   background: var(--paper);
   color: var(--ink);
 }
@@ -1099,52 +1189,237 @@ img.contain {
   text-align: center;
 }
 
+.mindmap-node {
+  display: block;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: min(11.6rem, 32vw);
+  padding: 0.8rem 0.85rem;
+  background: rgba(255, 250, 243, 0.95);
+  color: var(--ink);
+  text-decoration: none;
+  border: 1px solid rgba(244, 239, 230, 0.14);
+  z-index: 4;
+  opacity: 0;
+  transition:
+    transform 0.28s ease,
+    border-color 0.28s ease,
+    opacity 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.home-stage.is-ready .mindmap-node {
+  opacity: 1;
+  animation: bloom-node 0.7s ease backwards;
+}
+
+.home-stage.is-focused .mindmap-node {
+  opacity: 0.32;
+}
+
+.home-stage.is-focused .mindmap-node.is-active,
+.mindmap-node:hover,
+.mindmap-node:focus-visible {
+  opacity: 1;
+  z-index: 5;
+  transform: translate(-50%, -58%);
+  border-color: var(--clay);
+  box-shadow: 0 16px 40px rgba(20, 17, 15, 0.28);
+}
+
+.mindmap-node .kicker {
+  margin-bottom: 0.22rem;
+}
+
+.mindmap-node strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 550;
+}
+
+.mindmap-node span:last-child {
+  display: block;
+  margin-top: 0.18rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.stage-note {
+  position: absolute;
+  left: 1.2rem;
+  bottom: 1rem;
+  z-index: 4;
+  margin: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.48);
+}
+
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-70px);
+    opacity: 0;
+  }
+}
+
+@keyframes draw-branch {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes bloom-hub {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes bloom-node {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -42%) scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes pulse-mark {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(196, 165, 116, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(196, 165, 116, 0);
+  }
+}
+
+.home-stage.reduce-motion .stage-bg,
+.home-stage.reduce-motion .stage-dust span,
+.home-stage.reduce-motion .mindmap-lines path,
+.home-stage.reduce-motion .map-hub,
+.home-stage.reduce-motion .mindmap-node,
+.home-stage.reduce-motion .hub-ring .brand-mark {
+  animation: none !important;
+  opacity: 1;
+  transform: none;
+}
+
+.home-stage.reduce-motion .map-hub,
+.home-stage.reduce-motion .mindmap-node {
+  transform: translate(-50%, -50%);
+}
+
 @media (max-width: 960px) {
-  .mindmap {
+  body.on-home {
+    overflow: auto;
+  }
+
+  .home-stage {
     overflow: visible;
-    padding: 7rem 1rem 5.5rem;
     min-height: auto;
   }
 
-  .mindmap-lines {
+  .stage-bg,
+  .stage-veil {
+    position: fixed;
+  }
+
+  .stage-dust,
+  .mindmap-lines,
+  .stage-note {
     display: none;
   }
 
-  .mindmap-hub,
-  .mindmap-node {
+  .mindmap {
+    padding: 6.5rem 1rem 2rem;
+    min-height: auto;
+  }
+
+  .map-cluster {
+    display: block;
+  }
+
+  .cluster-label {
+    display: block;
+    margin: 1.4rem 0 0.65rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .map-hub,
+  .mindmap-node,
+  .home-stage.is-ready .map-hub,
+  .home-stage.is-ready .mindmap-node {
     position: relative;
     left: auto !important;
     top: auto !important;
     transform: none;
     width: 100%;
+    animation: rise-in 0.55s ease backwards;
   }
 
-  .mindmap-hub {
-    margin-bottom: 1rem;
+  .map-hub {
+    margin-bottom: 0.4rem;
   }
 
-  .mindmap-node + .mindmap-node {
-    margin-top: 0.6rem;
+  .map-hub h1 {
+    font-size: clamp(2.1rem, 11vw, 3rem);
   }
 
-  .mindmap-node:hover {
+  .home-stage.is-focused .mindmap-node,
+  .mindmap-node:hover,
+  .mindmap-node:focus-visible {
     transform: none;
+    opacity: 1;
   }
 
   .mindmap-node {
-    display: block;
-    width: 100%;
     background: var(--white);
     padding: 1rem 1.15rem;
+    margin-top: 0.55rem;
   }
 
-  .audio-dock {
-    position: relative;
-    left: auto;
-    bottom: auto;
+  .home-stage.reduce-motion .map-hub,
+  .home-stage.reduce-motion .mindmap-node {
     transform: none;
-    width: max-content;
-    margin: 1.2rem auto 0;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

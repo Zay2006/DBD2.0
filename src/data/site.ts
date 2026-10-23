@@ -17,6 +17,7 @@ export const site = {
   amazonBook:
     'https://www.amazon.com/s?k=I+Found+A+Reason+To+Speak+Michael+L+Clay',
   storyDriven: 'https://www.thestorydrivengame.com/',
+  live: 'https://dbdcreativeagency.com',
 } as const
 
 export type NavItem = {
@@ -35,30 +36,137 @@ export const nav: NavItem[] = [
   { to: '/about', label: 'About' },
 ]
 
+export type MapCluster = 'see' | 'make' | 'begin'
+
 export type MapNode = {
   id: string
   label: string
   kicker: string
   hint: string
-  to?: string
-  href?: string
+  href: string
+  image: string
+  x: number
+  y: number
+  cluster: MapCluster
 }
 
+export const mapClusters: { id: MapCluster; label: string }[] = [
+  { id: 'see', label: 'See the work' },
+  { id: 'make', label: 'Make with us' },
+  { id: 'begin', label: 'Begin' },
+]
+
 export const mapNodes: MapNode[] = [
-  { id: 'work', label: 'Work', kicker: 'Archive', hint: 'Stills, film, community', to: '/work' },
-  { id: 'hire', label: 'Hire', kicker: 'Studio', hint: 'Photography and film', to: '/hire' },
-  { id: 'programs', label: 'Programs', kicker: 'Schools', hint: 'Residencies and classes', to: '/programs' },
+  {
+    id: 'journey',
+    label: 'My Journey',
+    kicker: 'Michael',
+    hint: 'How the studio began',
+    href: `${site.live}/my-journey/`,
+    image: asset('/images/michael.jpg'),
+    x: 50,
+    y: 16,
+    cluster: 'begin',
+  },
+  {
+    id: 'family',
+    label: 'Family Photography',
+    kicker: 'Portraits',
+    hint: 'Weddings, portraits, real rooms',
+    href: `${site.live}/family-photography/`,
+    image: asset('/images/family.jpg'),
+    x: 18,
+    y: 28,
+    cluster: 'see',
+  },
+  {
+    id: 'commercial',
+    label: 'Commercial',
+    kicker: 'Studio',
+    hint: 'Orgs who serve children',
+    href: `${site.live}/commercial-photography/`,
+    image: asset('/images/jhec-cover.jpg'),
+    x: 82,
+    y: 28,
+    cluster: 'see',
+  },
+  {
+    id: 'film',
+    label: 'Filmmaking',
+    kicker: 'Motion',
+    hint: 'Documentary and promo',
+    href: `${site.live}/filmmaking/`,
+    image: asset('/images/garry.jpg'),
+    x: 11,
+    y: 47,
+    cluster: 'see',
+  },
+  {
+    id: 'trailers',
+    label: 'Docu Trailers',
+    kicker: 'Short form',
+    hint: 'Stories cut to the bone',
+    href: `${site.live}/documentary-trailers/`,
+    image: asset('/images/hancock.jpg'),
+    x: 89,
+    y: 47,
+    cluster: 'see',
+  },
+  {
+    id: 'visual',
+    label: 'Visual Storytelling',
+    kicker: 'Schools',
+    hint: 'Residencies and classrooms',
+    href: `${site.live}/visual-storytelling/`,
+    image: asset('/images/avs.jpg'),
+    x: 17,
+    y: 66,
+    cluster: 'make',
+  },
   {
     id: 'story',
     label: 'Story Driven',
     kicker: 'The game',
     hint: "Unlocking writer's block",
     href: site.storyDriven,
+    image: asset('/images/story-cards.jpg'),
+    x: 83,
+    y: 66,
+    cluster: 'make',
   },
-  { id: 'books', label: 'Books', kicker: 'Print', hint: 'A reason to speak', to: '/books' },
-  { id: 'shop', label: 'Shop', kicker: 'Kits', hint: 'Classes and the board', to: '/shop' },
-  { id: 'about', label: 'About', kicker: 'Michael', hint: 'The listener', to: '/about' },
-  { id: 'contact', label: 'Contact', kicker: 'Begin', hint: 'Start a project', to: '/contact' },
+  {
+    id: 'books',
+    label: 'Books',
+    kicker: 'Print',
+    hint: 'I Found a Reason to Speak',
+    href: `${site.live}/ifoundareason/`,
+    image: asset('/images/book-ifound.jpg'),
+    x: 28,
+    y: 82,
+    cluster: 'make',
+  },
+  {
+    id: 'shop',
+    label: 'Shop',
+    kicker: 'Store',
+    hint: 'Games and kits',
+    href: `${site.live}/store-2/`,
+    image: asset('/images/story-board.png'),
+    x: 72,
+    y: 82,
+    cluster: 'make',
+  },
+  {
+    id: 'contact',
+    label: 'Contact',
+    kicker: 'Begin',
+    hint: 'Start a project',
+    href: `${site.live}/contact/`,
+    image: asset('/images/mccarter.jpg'),
+    x: 50,
+    y: 86,
+    cluster: 'begin',
+  },
 ]
 
 export type WorkItem = {
