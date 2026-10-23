@@ -147,7 +147,7 @@ export default function Home() {
       <audio ref={audioRef} src={INTRO_SRC} preload="auto" />
 
       <div className="stage-bg" style={bgShift}>
-        <img src={HERO_SRC} alt="" className={active ? 'is-dim' : 'is-live'} />
+        <img src={HERO_SRC} alt="" />
         {mapNodes.map((node) => (
           <img
             key={node.id}
@@ -197,14 +197,14 @@ export default function Home() {
                 style={{ strokeDashoffset: RING * (1 - (playing ? progress : 0)) }}
               />
             </svg>
-            <span className="brand-mark">DBD</span>
+            <img className="hub-logo" src={asset('/images/dbd-logo.png')} alt="" />
           </div>
-          <p className="kicker">{active ? active.kicker : 'The studio'}</p>
+          <p className="kicker">{active ? active.kicker : 'Product & Services'}</p>
           <h1>Driven by Design</h1>
           <p className="hub-line">
             {active
               ? active.hint
-              : 'A living map of the current studio. Pick a branch, or hear Michael first.'}
+              : 'For individual(s), orgs and businesses who service children and families.'}
           </p>
           <div className="hub-audio">
             <button

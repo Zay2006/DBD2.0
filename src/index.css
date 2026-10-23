@@ -193,14 +193,63 @@ p:last-child {
   background: linear-gradient(to bottom, rgba(20, 17, 15, 0.55), transparent);
 }
 
-.header.home-lite {
-  pointer-events: none;
+.header.site-bar {
+  position: sticky;
+  background: #207cbe;
+  color: #fff;
+  height: 5.5rem;
+  border-bottom: 0;
 }
 
-.header.home-lite .header-inner,
-.header.home-lite .brand,
-.header.home-lite .btn {
-  pointer-events: auto;
+.header.site-bar .header-inner {
+  width: min(1240px, calc(100% - 1.5rem));
+}
+
+.header.site-bar .brand {
+  min-width: 0;
+}
+
+.header.site-bar .site-logo {
+  display: block;
+  height: 58px;
+  width: auto;
+}
+
+.header.site-bar .nav {
+  gap: 1rem;
+}
+
+.header.site-bar .nav a {
+  color: #fff;
+  font-family: 'Lato', var(--sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  opacity: 1;
+  text-decoration: none;
+  letter-spacing: 0;
+}
+
+.header.site-bar .nav a:hover,
+.header.site-bar .nav a.active {
+  color: #d7ecf8;
+}
+
+.header.site-bar .menu-toggle {
+  border-color: #fff;
+}
+
+@media (max-width: 1180px) {
+  .header.site-bar .nav {
+    gap: 0.7rem;
+  }
+
+  .header.site-bar .nav a {
+    font-size: 0.8rem;
+  }
+
+  .header.site-bar .site-logo {
+    height: 50px;
+  }
 }
 
 .header.solid {
@@ -949,19 +998,26 @@ img.contain {
   .header.on-dark.open {
     background: var(--ink);
   }
+
+  .header.site-bar.open .nav {
+    background: #207cbe;
+    color: #fff;
+  }
 }
 
 body.on-home {
   overflow: hidden;
-  background: var(--ink);
+  background: #fff;
+  font-family: 'Lato', var(--sans);
 }
 
 .home-stage {
   position: relative;
-  min-height: 100svh;
-  color: var(--paper);
+  min-height: calc(100svh - 5.5rem);
+  color: #111;
   overflow: hidden;
-  background: var(--ink);
+  background: #fff;
+  font-family: 'Lato', var(--sans);
 }
 
 .stage-bg {
@@ -990,7 +1046,7 @@ body.on-home {
   opacity: 0;
 }
 
-.home-stage.is-ready:not(.is-focused):not(.reduce-motion) .stage-bg img.is-live {
+.home-stage.is-focused:not(.reduce-motion) .stage-bg img.is-live {
   animation: kenburns 28s ease-in-out alternate infinite;
 }
 
@@ -998,10 +1054,13 @@ body.on-home {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background:
-    radial-gradient(circle at 50% 46%, rgba(20, 17, 15, 0.18), rgba(20, 17, 15, 0.72) 58%),
-    linear-gradient(to top, rgba(20, 17, 15, 0.9), rgba(20, 17, 15, 0.22) 52%);
+  background: #fff;
   pointer-events: none;
+  transition: background 0.45s ease;
+}
+
+.home-stage.is-focused .stage-veil {
+  background: rgba(16, 24, 32, 0.28);
 }
 
 .stage-dust {
@@ -1016,14 +1075,14 @@ body.on-home {
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: rgba(244, 239, 230, 0.42);
+  background: rgba(32, 124, 190, 0.28);
   animation: drift 12s linear infinite;
 }
 
 .mindmap {
   position: relative;
   z-index: 3;
-  min-height: 100svh;
+  min-height: calc(100svh - 5.5rem);
 }
 
 .mindmap-lines {
@@ -1036,8 +1095,8 @@ body.on-home {
 
 .mindmap-lines path {
   fill: none;
-  stroke: var(--gold);
-  stroke-width: 0.2;
+  stroke: #207cbe;
+  stroke-width: 0.22;
   opacity: 0.55;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -1054,8 +1113,8 @@ body.on-home {
 
 .home-stage.is-focused .mindmap-lines path.is-active {
   opacity: 1;
-  stroke: var(--clay);
-  stroke-width: 0.32;
+  stroke: #207cbe;
+  stroke-width: 0.38;
 }
 
 .map-cluster {
@@ -1074,9 +1133,9 @@ body.on-home {
   width: min(23.5rem, 72vw);
   text-align: center;
   padding: 1.35rem 1.2rem 1.15rem;
-  background: rgba(20, 17, 15, 0.66);
-  border: 1px solid rgba(244, 239, 230, 0.16);
-  backdrop-filter: blur(14px);
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
   z-index: 4;
   opacity: 0;
 }
@@ -1087,7 +1146,7 @@ body.on-home {
 }
 
 .home-stage.is-playing .map-hub {
-  box-shadow: 0 0 0 1px rgba(196, 165, 116, 0.35), 0 18px 50px rgba(20, 17, 15, 0.35);
+  box-shadow: 0 0 0 2px rgba(32, 124, 190, 0.28), 0 16px 40px rgba(0, 0, 0, 0.1);
 }
 
 .hub-ring {
@@ -1111,37 +1170,54 @@ body.on-home {
 }
 
 .hub-ring-track {
-  stroke: rgba(244, 239, 230, 0.2);
+  stroke: #d5d5d5;
 }
 
 .hub-ring-progress {
-  stroke: var(--gold);
+  stroke: #207cbe;
   stroke-dasharray: 131.95;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.2s linear;
 }
 
-.hub-ring .brand-mark {
-  border-color: var(--paper);
-  width: 2.6rem;
-  height: 2.6rem;
+.hub-logo {
+  width: 2.7rem;
+  height: auto;
+  display: block;
+  position: relative;
+  z-index: 1;
+  padding: 0.45rem;
+  background: #207cbe;
+  border-radius: 50%;
 }
 
-.home-stage.is-playing .hub-ring .brand-mark {
+.home-stage.is-playing .hub-logo {
   animation: pulse-mark 2.4s ease-in-out infinite;
 }
 
+.map-hub .kicker,
+.mindmap-node .kicker {
+  color: #207cbe;
+  font-family: 'Lato', var(--sans);
+  font-weight: 700;
+}
+
 .map-hub h1 {
-  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-family: 'Lato', var(--sans);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 4.4vw, 3.1rem);
   max-width: 12ch;
   margin: 0 auto;
+  color: #111;
 }
 
 .map-hub .hub-line {
-  color: rgba(244, 239, 230, 0.8);
+  color: #555;
   min-height: 2.8em;
   margin: 0.65rem 0 0;
   transition: color 0.3s ease;
+  font-weight: 300;
 }
 
 .hub-audio {
@@ -1158,28 +1234,30 @@ body.on-home {
   padding: 0.45rem 1rem;
   border-radius: 999px;
   border: 0;
-  background: var(--clay);
-  color: var(--white);
+  background: #207cbe;
+  color: #fff;
   cursor: pointer;
+  font-weight: 700;
 }
 
 .intro-play:hover {
-  background: var(--clay-deep);
+  background: #1869a3;
 }
 
 .hub-chip {
   min-height: 2.2rem;
   padding: 0.3rem 0.8rem;
   border-radius: 999px;
-  border: 1px solid rgba(244, 239, 230, 0.35);
+  border: 1px solid #207cbe;
   background: transparent;
-  color: var(--paper);
+  color: #207cbe;
   cursor: pointer;
+  font-weight: 700;
 }
 
 .hub-chip:hover {
-  background: var(--paper);
-  color: var(--ink);
+  background: #207cbe;
+  color: #fff;
 }
 
 .audio-time {
@@ -1187,6 +1265,7 @@ body.on-home {
   letter-spacing: 0.06em;
   min-width: 6.5rem;
   text-align: center;
+  color: #666;
 }
 
 .mindmap-node {
@@ -1195,10 +1274,10 @@ body.on-home {
   transform: translate(-50%, -50%);
   width: min(11.6rem, 32vw);
   padding: 0.8rem 0.85rem;
-  background: rgba(255, 250, 243, 0.95);
-  color: var(--ink);
+  background: #fff;
+  color: #111;
   text-decoration: none;
-  border: 1px solid rgba(244, 239, 230, 0.14);
+  border: 1px solid #e6e6e6;
   z-index: 4;
   opacity: 0;
   transition:
@@ -1223,8 +1302,8 @@ body.on-home {
   opacity: 1;
   z-index: 5;
   transform: translate(-50%, -58%);
-  border-color: var(--clay);
-  box-shadow: 0 16px 40px rgba(20, 17, 15, 0.28);
+  border-color: #207cbe;
+  box-shadow: 0 16px 40px rgba(32, 124, 190, 0.18);
 }
 
 .mindmap-node .kicker {
@@ -1233,16 +1312,17 @@ body.on-home {
 
 .mindmap-node strong {
   display: block;
-  font-family: var(--serif);
-  font-size: 1.12rem;
-  font-weight: 550;
+  font-family: 'Lato', var(--sans);
+  font-size: 1.08rem;
+  font-weight: 700;
 }
 
 .mindmap-node span:last-child {
   display: block;
   margin-top: 0.18rem;
   font-size: 0.78rem;
-  color: var(--muted);
+  color: #6b6b6b;
+  font-weight: 400;
 }
 
 .stage-note {
@@ -1254,7 +1334,7 @@ body.on-home {
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(244, 239, 230, 0.48);
+  color: #8a8a8a;
 }
 
 @keyframes kenburns {
@@ -1311,10 +1391,10 @@ body.on-home {
 @keyframes pulse-mark {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(196, 165, 116, 0.45);
+    box-shadow: 0 0 0 0 rgba(32, 124, 190, 0.45);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(196, 165, 116, 0);
+    box-shadow: 0 0 0 10px rgba(32, 124, 190, 0);
   }
 }
 
@@ -1323,7 +1403,7 @@ body.on-home {
 .home-stage.reduce-motion .mindmap-lines path,
 .home-stage.reduce-motion .map-hub,
 .home-stage.reduce-motion .mindmap-node,
-.home-stage.reduce-motion .hub-ring .brand-mark {
+.home-stage.reduce-motion .hub-logo {
   animation: none !important;
   opacity: 1;
   transform: none;
@@ -1356,7 +1436,7 @@ body.on-home {
   }
 
   .mindmap {
-    padding: 6.5rem 1rem 2rem;
+    padding: 1.25rem 1rem 2rem;
     min-height: auto;
   }
 
@@ -1370,7 +1450,7 @@ body.on-home {
     font-size: 0.72rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--gold);
+    color: #207cbe;
   }
 
   .map-hub,

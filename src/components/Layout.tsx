@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import { nav, site } from '../data/site'
+import { asset, liveNav, nav, site } from '../data/site'
 
 const titles: Record<string, string> = {
   '/': 'Driven by Design — Multimedia Visual Storytelling',
@@ -43,56 +43,57 @@ function Header() {
 
   const className = [
     'header',
-    onHero ? 'on-dark' : 'solid',
-    isHome ? 'home-lite' : '',
+    isHome ? 'site-bar' : onHero ? 'on-dark' : 'solid',
     open ? 'open' : '',
   ]
     .filter(Boolean)
     .join(' ')
 
+  const items = isHome ? liveNav : nav
+
   return (
     <header className={className}>
       <div className="header-inner">
         <NavLink to="/" end className="brand" onClick={() => setOpen(false)}>
-          <span className="brand-mark">DBD</span>
-          <span className="brand-text">
-            <strong>Driven by Design</strong>
-            <span>Creative Agency</span>
-          </span>
+          {isHome ? (
+            <img className="site-logo" src={asset('/images/dbd-logo.png')} alt="Driven by Design" />
+          ) : (
+            <>
+              <span className="brand-mark">DBD</span>
+              <span className="brand-text">
+                <strong>Driven by Design</strong>
+                <span>Creative Agency</span>
+              </span>
+            </>
+          )}
         </NavLink>
-        {isHome ? (
-          <a className="btn" href={`${site.live}/contact/`} style={{ color: '#fffaf3' }}>
-            Let's talk
-          </a>
-        ) : (
-          <>
-            <button
-              type="button"
-              className="menu-toggle"
-              aria-expanded={open}
-              aria-label={open ? 'Close menu' : 'Open menu'}
-              onClick={() => setOpen((v) => !v)}
-            >
-              <span />
-            </button>
-            <nav className="nav" aria-label="Primary">
-              {nav.map((item) =>
-                item.href ? (
-                  <a key={item.label} href={item.href} target="_blank" rel="noreferrer">
-                    {item.label}
-                  </a>
-                ) : (
-                  <NavLink key={item.to} to={item.to ?? '/'}>
-                    {item.label}
-                  </NavLink>
-                ),
-              )}
-              <Link to="/contact" className="btn" style={{ color: '#fffaf3' }}>
-                Let's talk
-              </Link>
-            </nav>
-          </>
-        )}
+        <button
+          type="button"
+          className="menu-toggle"
+          aria-expanded={open}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span />
+        </button>
+        <nav className="nav" aria-label="Primary">
+          {items.map((item) =>
+            item.href ? (
+              <a key={item.label} href={item.href}>
+                {item.label}
+              </a>
+            ) : (
+              <NavLink key={item.to} to={item.to ?? '/'}>
+                {item.label}
+              </NavLink>
+            ),
+          )}
+          {isHome ? null : (
+            <Link to="/contact" className="btn" style={{ color: '#fffaf3' }}>
+              Let's talk
+            </Link>
+          )}
+        </nav>
       </div>
     </header>
   )

@@ -36,6 +36,18 @@ export const nav: NavItem[] = [
   { to: '/about', label: 'About' },
 ]
 
+export const liveNav: NavItem[] = [
+  { to: '/', label: 'Home' },
+  { href: `${site.live}/my-journey/`, label: 'My Journey' },
+  { href: `${site.live}/visual-storytelling/`, label: 'Classes' },
+  { href: site.storyDriven, label: 'Story Driven' },
+  { href: `${site.live}/ifoundareason/`, label: 'Books' },
+  { href: `${site.live}/filmmaking/`, label: 'Filmmaking' },
+  { href: `${site.live}/family-photography/`, label: 'Photography' },
+  { href: `${site.live}/testimonials/`, label: 'Testimonials' },
+  { href: `${site.live}/contact/`, label: 'Contact Me' },
+]
+
 export type MapCluster = 'see' | 'make' | 'begin'
 
 export type MapNode = {
@@ -114,9 +126,9 @@ export const mapNodes: MapNode[] = [
   },
   {
     id: 'visual',
-    label: 'Visual Storytelling',
+    label: 'Classes',
     kicker: 'Schools',
-    hint: 'Residencies and classrooms',
+    hint: 'The Art of Visual Storytelling',
     href: `${site.live}/visual-storytelling/`,
     image: asset('/images/avs.jpg'),
     x: 17,
@@ -158,9 +170,9 @@ export const mapNodes: MapNode[] = [
   },
   {
     id: 'contact',
-    label: 'Contact',
+    label: 'Contact Me',
     kicker: 'Begin',
-    hint: 'Start a project',
+    hint: "Let's work together",
     href: `${site.live}/contact/`,
     image: asset('/images/mccarter.jpg'),
     x: 50,
