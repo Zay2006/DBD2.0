@@ -68,11 +68,17 @@ function Header() {
           <span />
         </button>
         <nav className="nav" aria-label="Primary">
-          {nav.map((item) => (
-            <NavLink key={item.to} to={item.to}>
-              {item.label}
-            </NavLink>
-          ))}
+          {nav.map((item) =>
+            item.href ? (
+              <a key={item.label} href={item.href} target="_blank" rel="noreferrer">
+                {item.label}
+              </a>
+            ) : (
+              <NavLink key={item.to} to={item.to ?? '/'}>
+                {item.label}
+              </NavLink>
+            ),
+          )}
           <Link to="/contact" className="btn" style={{ color: '#fffaf3' }}>
             Let's talk
           </Link>
@@ -96,8 +102,14 @@ function Footer() {
           <h3>Visit</h3>
           <ul>
             {nav.map((item) => (
-              <li key={item.to}>
-                <NavLink to={item.to}>{item.label}</NavLink>
+              <li key={item.label}>
+                {item.href ? (
+                  <a href={item.href} target="_blank" rel="noreferrer">
+                    {item.label}
+                  </a>
+                ) : (
+                  <NavLink to={item.to ?? '/'}>{item.label}</NavLink>
+                )}
               </li>
             ))}
             <li>

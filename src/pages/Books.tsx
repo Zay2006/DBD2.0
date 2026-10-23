@@ -57,7 +57,11 @@ export default function Books() {
               Michael's first children's book — still in the making, not vaporware with a 2022 stamp. When it is ready, it will live here.
             </p>
             <p>
-              Until then, the family documentary <em>On the Garry: A Generation of Oral Traditions</em> and the Story Driven board are the other doors into the same house.
+              Until then, the family documentary <em>On the Garry: A Generation of Oral Traditions</em> and{' '}
+              <a href={site.storyDriven} target="_blank" rel="noreferrer">
+                Story Driven
+              </a>{' '}
+              are the other doors into the same house.
             </p>
           </div>
           <img

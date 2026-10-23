@@ -9,8 +9,8 @@ const products = [
     image: asset('/images/story-board.png'),
     alt: 'Story Driven board game',
     body: 'The physical writing game for classrooms, counselors, and teaching artists. Meets students at their writing level. Aligns with ELA, writing, and SEL.',
-    to: '/contact',
-    cta: 'Inquire to order',
+    href: site.storyDriven,
+    cta: 'Visit the game site',
   },
   {
     title: "Finding My Niche' e-book",
@@ -38,7 +38,7 @@ export default function Shop() {
       <PageHero
         kicker="Shop"
         title="Games, classes, and a book you can put on the table."
-        lede="Orders for Story Driven and the photography class go through the studio so Michael can match the right kit or PD date. The family book is on Amazon."
+        lede="Story Driven now has its own site. Photography classes still go through the studio. The family book is on Amazon."
       />
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap">

@@ -16,17 +16,50 @@ export const site = {
   youtube: 'https://www.youtube.com/@dbdcreativeagency6698',
   amazonBook:
     'https://www.amazon.com/s?k=I+Found+A+Reason+To+Speak+Michael+L+Clay',
+  storyDriven: 'https://www.thestorydrivengame.com/',
 } as const
 
-export const nav = [
+export type NavItem = {
+  label: string
+  to?: string
+  href?: string
+}
+
+export const nav: NavItem[] = [
   { to: '/work', label: 'Work' },
   { to: '/hire', label: 'Hire' },
   { to: '/programs', label: 'Programs' },
-  { to: '/story-driven', label: 'Story Driven' },
+  { href: site.storyDriven, label: 'Story Driven' },
   { to: '/books', label: 'Books' },
   { to: '/shop', label: 'Shop' },
   { to: '/about', label: 'About' },
-] as const
+]
+
+export type MapNode = {
+  id: string
+  label: string
+  kicker: string
+  hint: string
+  to?: string
+  href?: string
+}
+
+export const mapNodes: MapNode[] = [
+  { id: 'work', label: 'Work', kicker: 'Archive', hint: 'Stills, film, community', to: '/work' },
+  { id: 'hire', label: 'Hire', kicker: 'Studio', hint: 'Photography and film', to: '/hire' },
+  { id: 'programs', label: 'Programs', kicker: 'Schools', hint: 'Residencies and classes', to: '/programs' },
+  {
+    id: 'story',
+    label: 'Story Driven',
+    kicker: 'The game',
+    hint: "Unlocking writer's block",
+    href: site.storyDriven,
+  },
+  { id: 'books', label: 'Books', kicker: 'Print', hint: 'A reason to speak', to: '/books' },
+  { id: 'shop', label: 'Shop', kicker: 'Kits', hint: 'Classes and the board', to: '/shop' },
+  { id: 'about', label: 'About', kicker: 'Michael', hint: 'The listener', to: '/about' },
+  { id: 'contact', label: 'Contact', kicker: 'Begin', hint: 'Start a project', to: '/contact' },
+]
 
 export type WorkItem = {
   src: string
