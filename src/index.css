@@ -1034,6 +1034,7 @@ img.contain {
 }
 
 .mindmap-node {
+  display: block;
   position: absolute;
   transform: translate(-50%, -50%);
   width: min(11.5rem, 34vw);
@@ -1131,7 +1132,10 @@ img.contain {
   }
 
   .mindmap-node {
+    display: block;
+    width: 100%;
     background: var(--white);
+    padding: 1rem 1.15rem;
   }
 
   .audio-dock {
