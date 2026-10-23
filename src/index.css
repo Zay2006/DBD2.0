@@ -948,6 +948,7 @@ img.contain {
   color: var(--paper);
   overflow: hidden;
   background: var(--ink);
+  padding-bottom: 3.5rem;
 }
 
 .intro-gate img,
@@ -1070,7 +1071,7 @@ img.contain {
 .audio-dock {
   position: absolute;
   left: 50%;
-  bottom: 1.2rem;
+  bottom: 0.7rem;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
@@ -1104,20 +1105,15 @@ img.contain {
     min-height: auto;
   }
 
-  .mindmap-lines,
-  .mindmap-bg {
+  .mindmap-lines {
     display: none;
-  }
-
-  .mindmap::after {
-    background: var(--ink);
   }
 
   .mindmap-hub,
   .mindmap-node {
     position: relative;
-    left: auto;
-    top: auto;
+    left: auto !important;
+    top: auto !important;
     transform: none;
     width: 100%;
   }
@@ -1134,9 +1130,16 @@ img.contain {
     transform: none;
   }
 
+  .mindmap-node {
+    background: var(--white);
+  }
+
   .audio-dock {
-    position: sticky;
-    bottom: 0.8rem;
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    width: max-content;
     margin: 1.2rem auto 0;
   }
 }

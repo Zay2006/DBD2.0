@@ -6,14 +6,14 @@ const INTRO_SRC = asset('/audio/dbd-intro.mp3')
 const INTRO_KEY = 'dbd-intro-seen'
 
 const NODE_POINTS: Record<string, { x: number; y: number }> = {
-  about: { x: 50, y: 14 },
-  work: { x: 18, y: 26 },
-  hire: { x: 82, y: 26 },
+  about: { x: 50, y: 18 },
+  work: { x: 18, y: 28 },
+  hire: { x: 82, y: 28 },
   programs: { x: 11, y: 52 },
   story: { x: 89, y: 52 },
-  books: { x: 20, y: 78 },
-  shop: { x: 80, y: 78 },
-  contact: { x: 50, y: 90 },
+  books: { x: 20, y: 74 },
+  shop: { x: 80, y: 74 },
+  contact: { x: 50, y: 84 },
 }
 
 function formatTime(seconds: number) {
