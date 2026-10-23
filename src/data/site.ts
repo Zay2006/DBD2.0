@@ -16,17 +16,170 @@ export const site = {
   youtube: 'https://www.youtube.com/@dbdcreativeagency6698',
   amazonBook:
     'https://www.amazon.com/s?k=I+Found+A+Reason+To+Speak+Michael+L+Clay',
+  storyDriven: 'https://www.thestorydrivengame.com/',
+  live: 'https://dbdcreativeagency.com',
 } as const
 
-export const nav = [
+export type NavItem = {
+  label: string
+  to?: string
+  href?: string
+}
+
+export const nav: NavItem[] = [
   { to: '/work', label: 'Work' },
   { to: '/hire', label: 'Hire' },
   { to: '/programs', label: 'Programs' },
-  { to: '/story-driven', label: 'Story Driven' },
+  { href: site.storyDriven, label: 'Story Driven' },
   { to: '/books', label: 'Books' },
   { to: '/shop', label: 'Shop' },
   { to: '/about', label: 'About' },
-] as const
+]
+
+export const liveNav: NavItem[] = [
+  { to: '/', label: 'Home' },
+  { href: `${site.live}/my-journey/`, label: 'My Journey' },
+  { href: `${site.live}/visual-storytelling/`, label: 'Classes' },
+  { href: site.storyDriven, label: 'Story Driven' },
+  { href: `${site.live}/ifoundareason/`, label: 'Books' },
+  { href: `${site.live}/filmmaking/`, label: 'Filmmaking' },
+  { href: `${site.live}/family-photography/`, label: 'Photography' },
+  { href: `${site.live}/testimonials/`, label: 'Testimonials' },
+  { href: `${site.live}/contact/`, label: 'Contact Me' },
+]
+
+export type MapCluster = 'see' | 'make' | 'begin'
+
+export type MapNode = {
+  id: string
+  label: string
+  kicker: string
+  hint: string
+  href: string
+  image: string
+  x: number
+  y: number
+  cluster: MapCluster
+}
+
+export const mapClusters: { id: MapCluster; label: string }[] = [
+  { id: 'see', label: 'See the work' },
+  { id: 'make', label: 'Make with us' },
+  { id: 'begin', label: 'Begin' },
+]
+
+export const mapNodes: MapNode[] = [
+  {
+    id: 'journey',
+    label: 'My Journey',
+    kicker: 'Michael',
+    hint: 'How the studio began',
+    href: `${site.live}/my-journey/`,
+    image: asset('/images/michael.jpg'),
+    x: 50,
+    y: 16,
+    cluster: 'begin',
+  },
+  {
+    id: 'family',
+    label: 'Family Photography',
+    kicker: 'Portraits',
+    hint: 'Weddings, portraits, real rooms',
+    href: `${site.live}/family-photography/`,
+    image: asset('/images/family.jpg'),
+    x: 18,
+    y: 28,
+    cluster: 'see',
+  },
+  {
+    id: 'commercial',
+    label: 'Commercial',
+    kicker: 'Studio',
+    hint: 'Orgs who serve children',
+    href: `${site.live}/commercial-photography/`,
+    image: asset('/images/jhec-cover.jpg'),
+    x: 82,
+    y: 28,
+    cluster: 'see',
+  },
+  {
+    id: 'film',
+    label: 'Filmmaking',
+    kicker: 'Motion',
+    hint: 'Documentary and promo',
+    href: `${site.live}/filmmaking/`,
+    image: asset('/images/garry.jpg'),
+    x: 11,
+    y: 47,
+    cluster: 'see',
+  },
+  {
+    id: 'trailers',
+    label: 'Docu Trailers',
+    kicker: 'Short form',
+    hint: 'Stories cut to the bone',
+    href: `${site.live}/documentary-trailers/`,
+    image: asset('/images/hancock.jpg'),
+    x: 89,
+    y: 47,
+    cluster: 'see',
+  },
+  {
+    id: 'visual',
+    label: 'Classes',
+    kicker: 'Schools',
+    hint: 'The Art of Visual Storytelling',
+    href: `${site.live}/visual-storytelling/`,
+    image: asset('/images/avs.jpg'),
+    x: 17,
+    y: 66,
+    cluster: 'make',
+  },
+  {
+    id: 'story',
+    label: 'Story Driven',
+    kicker: 'The game',
+    hint: "Unlocking writer's block",
+    href: site.storyDriven,
+    image: asset('/images/story-cards.jpg'),
+    x: 83,
+    y: 66,
+    cluster: 'make',
+  },
+  {
+    id: 'books',
+    label: 'Books',
+    kicker: 'Print',
+    hint: 'I Found a Reason to Speak',
+    href: `${site.live}/ifoundareason/`,
+    image: asset('/images/book-ifound.jpg'),
+    x: 28,
+    y: 82,
+    cluster: 'make',
+  },
+  {
+    id: 'shop',
+    label: 'Shop',
+    kicker: 'Store',
+    hint: 'Games and kits',
+    href: `${site.live}/store-2/`,
+    image: asset('/images/story-board.png'),
+    x: 72,
+    y: 82,
+    cluster: 'make',
+  },
+  {
+    id: 'contact',
+    label: 'Contact Me',
+    kicker: 'Begin',
+    hint: "Let's work together",
+    href: `${site.live}/contact/`,
+    image: asset('/images/mccarter.jpg'),
+    x: 50,
+    y: 86,
+    cluster: 'begin',
+  },
+]
 
 export type WorkItem = {
   src: string

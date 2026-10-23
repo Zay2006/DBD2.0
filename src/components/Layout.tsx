@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import { nav, site } from '../data/site'
+import { asset, liveNav, nav, site } from '../data/site'
 
 const titles: Record<string, string> = {
   '/': 'Driven by Design — Multimedia Visual Storytelling',
@@ -27,7 +27,8 @@ function Header() {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const onHero = pathname === '/' && !scrolled
+  const isHome = pathname === '/'
+  const onHero = isHome && !scrolled
 
   useEffect(() => {
     setOpen(false)
@@ -42,21 +43,29 @@ function Header() {
 
   const className = [
     'header',
-    onHero ? 'on-dark' : 'solid',
+    isHome ? 'site-bar' : onHero ? 'on-dark' : 'solid',
     open ? 'open' : '',
   ]
     .filter(Boolean)
     .join(' ')
 
+  const items = isHome ? liveNav : nav
+
   return (
     <header className={className}>
       <div className="header-inner">
         <NavLink to="/" end className="brand" onClick={() => setOpen(false)}>
-          <span className="brand-mark">DBD</span>
-          <span className="brand-text">
-            <strong>Driven by Design</strong>
-            <span>Creative Agency</span>
-          </span>
+          {isHome ? (
+            <img className="site-logo" src={asset('/images/dbd-logo.png')} alt="Driven by Design" />
+          ) : (
+            <>
+              <span className="brand-mark">DBD</span>
+              <span className="brand-text">
+                <strong>Driven by Design</strong>
+                <span>Creative Agency</span>
+              </span>
+            </>
+          )}
         </NavLink>
         <button
           type="button"
@@ -68,14 +77,22 @@ function Header() {
           <span />
         </button>
         <nav className="nav" aria-label="Primary">
-          {nav.map((item) => (
-            <NavLink key={item.to} to={item.to}>
-              {item.label}
-            </NavLink>
-          ))}
-          <Link to="/contact" className="btn" style={{ color: '#fffaf3' }}>
-            Let's talk
-          </Link>
+          {items.map((item) =>
+            item.href ? (
+              <a key={item.label} href={item.href}>
+                {item.label}
+              </a>
+            ) : (
+              <NavLink key={item.to} to={item.to ?? '/'}>
+                {item.label}
+              </NavLink>
+            ),
+          )}
+          {isHome ? null : (
+            <Link to="/contact" className="btn" style={{ color: '#fffaf3' }}>
+              Let's talk
+            </Link>
+          )}
         </nav>
       </div>
     </header>
@@ -96,8 +113,14 @@ function Footer() {
           <h3>Visit</h3>
           <ul>
             {nav.map((item) => (
-              <li key={item.to}>
-                <NavLink to={item.to}>{item.label}</NavLink>
+              <li key={item.label}>
+                {item.href ? (
+                  <a href={item.href} target="_blank" rel="noreferrer">
+                    {item.label}
+                  </a>
+                ) : (
+                  <NavLink to={item.to ?? '/'}>{item.label}</NavLink>
+                )}
               </li>
             ))}
             <li>
@@ -143,6 +166,7 @@ function Footer() {
 }
 
 export default function Layout() {
+  const { pathname } = useLocation()
   return (
     <>
       <ScrollToTop />
@@ -151,7 +175,7 @@ export default function Layout() {
       </a>
       <Header />
       <Outlet />
-      <Footer />
+      {pathname === '/' ? null : <Footer />}
     </>
   )
 }

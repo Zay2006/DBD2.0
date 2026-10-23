@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
-import { asset } from '../data/site'
+import { asset, site } from '../data/site'
 
 const faqs = [
   {
@@ -46,8 +46,15 @@ export default function StoryDriven() {
       <PageHero
         kicker="Story Driven"
         title="Unlocking writer's block — at the table and on the lawn."
-        lede="A fun, educational board game that helps different levels of writers work at their own pace. Thirty to sixty minutes. More than ten ways to play."
+        lede="A fun, educational board game that helps different levels of writers work at their own pace. Thirty to sixty minutes. More than ten ways to play. The full game site now lives on its own."
       />
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <a className="btn" href={site.storyDriven} target="_blank" rel="noreferrer">
+            Visit thestorydrivengame.com
+          </a>
+        </div>
+      </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="wrap split">
@@ -78,9 +85,9 @@ export default function StoryDriven() {
               </div>
             </div>
             <div className="btn-row">
-              <Link className="btn" to="/shop">
-                Story Driven for professionals · $300
-              </Link>
+              <a className="btn" href={site.storyDriven} target="_blank" rel="noreferrer">
+                Open the Story Driven site
+              </a>
               <Link className="btn outline" to="/contact">
                 Book PD or a family event
               </Link>
