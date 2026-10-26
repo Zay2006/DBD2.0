@@ -1,69 +1,56 @@
-import { Link } from 'react-router-dom'
-import PageHero from '../components/PageHero'
+import OrigHero from '../components/OrigHero'
 import { asset, site } from '../data/site'
 
 export default function Books() {
   return (
     <main id="main">
-      <PageHero
-        kicker="Books"
-        title="Start the conversation."
-        lede="Poetry, photographs, and family testimony — written so a household has a reason to speak."
-      />
-
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="wrap split">
-          <img
-            src={asset('/images/book-ifound.jpg')}
-            alt="Cover of I Found a Reason to Speak: Oneness for a Generation"
-            className="contain"
-          />
-          <div>
-            <p className="kicker">2024</p>
-            <h2>I Found a Reason to Speak: Oneness for a Generation</h2>
-            <p className="lede">
-              A picturesque collection of poems Michael curated while walking, watching how nature conserves itself, and rebuilding a bond with his family.
-            </p>
-            <p>
-              The hardest relationships to build can be with family. The book is an invitation back into that work — listen, ask, and speak.
-            </p>
-            <blockquote className="quote" style={{ marginTop: '1.2rem' }}>
-              <p>
-                “Clay's wordsmithing lays upon a field of advocacy, creating a landscape that honors ancestors, the familiar and the personal.”
-              </p>
-              <footer>
-                <strong>Karen “Queen Nur” Abdul-Malik</strong>
-                2020 Zora Neale Hurston Award, National Association of Black Storytellers
-              </footer>
-            </blockquote>
-            <div className="btn-row">
-              <a className="btn" href={site.amazonBook} target="_blank" rel="noreferrer">
-                Find it on Amazon
-              </a>
-              <Link className="btn outline" to="/contact">
-                Invite a reading
-              </Link>
-            </div>
-          </div>
+      <OrigHero image={asset('/images/book-ifound.jpg')} title="Book" />
+      <section className="orig-section">
+        <div className="orig-copy">
+          <img src={asset('/images/book-cover.jpg')} alt="I Found A Reason To Speak cover" style={{ maxWidth: '18rem', margin: '0 auto 1.5rem' }} />
+          <h2>I Found A Reason To Speak: Oneness for a Generation</h2>
+          <p>
+            is a picturesque collection of poems, the author curated in his walk, observing nature’s conservation to build a stronger bond with his family. The poems reflect how his words and actions changed when he took the time to listen and engage.
+          </p>
+          <p>
+            One of the author’s mentors told him, “Attitudes, beliefs and behaviors are the most difficult things to change about the human condition. They are the most critical things we need to change as a human collective in order to move forward.”
+          </p>
+          <p>
+            The hardest relationships to build can be with family. After so many failed attempts, I gave up. I spent years writing off and on in my journal. Mentors helped me gravitate back towards my family and I’m glad they did.
+          </p>
+          <p>
+            <strong>Start the conversation.</strong>
+          </p>
+          <p>
+            “I Found a Reason to Speak profoundly guides the reader on a journey through the lens of the author&apos;s storytelling seasoned with photographic testimony.” — Karen “Queen Nur” Abdul-Malik
+          </p>
+          <p>
+            “Your book brought me much peace and inspiration. It was written very clearly with much emotion and gave a very positive outlook for the future of families.” — Mrs. Ortiz
+          </p>
+          <a className="orig-btn solid" href={site.amazonBook} target="_blank" rel="noreferrer">
+            Purchase on Amazon
+          </a>
         </div>
       </section>
-
-      <section className="section alt">
-        <div className="wrap split reverse">
-          <div>
-            <p className="kicker">In progress</p>
-            <h2>Uncle Mike &amp; Me</h2>
-            <p className="lede">
-              Michael's first children's book — still in the making, not vaporware with a 2022 stamp. When it is ready, it will live here.
-            </p>
-            <p>
-              Until then, the family documentary <em>On the Garry: A Generation of Oral Traditions</em> and the Story Driven board are the other doors into the same house.
-            </p>
-          </div>
-          <img
-            src={asset('/images/book-signing.jpg')}
-            alt="Guests at the first book signing in December 2024"
-          />
+      <section className="orig-band">
+        <h2>Events</h2>
+        <p>Stay updated</p>
+      </section>
+      <section className="orig-section">
+        <div className="orig-copy">
+          <p>
+            <strong>Story Driven: Shining A Light Day 2</strong> — Piece Studios, July 12, 2026
+          </p>
+          <p>
+            <strong>Scenes on Paper: Multigenerational Scrapbooking</strong> — African American Museum of Philadelphia, March 31, 2026
+          </p>
+          <p>
+            <strong>Archiving Our Family Stories</strong> — MAKUU Center, March 19, 2026
+          </p>
+          <p>
+            <strong>1st Book Signing was a success!!!</strong> — December 7, 2024
+          </p>
+          <img src={asset('/images/book-signing.jpg')} alt="First book signing" />
         </div>
       </section>
     </main>

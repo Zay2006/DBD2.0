@@ -1,62 +1,60 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
-import { nav, site } from '../data/site'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { asset, nav, type NavItem } from '../data/site'
 
 const titles: Record<string, string> = {
-  '/': 'Driven by Design — Multimedia Visual Storytelling',
-  '/work': 'Work — Driven by Design',
-  '/hire': 'Hire — Driven by Design',
-  '/programs': 'Programs — Driven by Design',
-  '/story-driven': 'Story Driven — Driven by Design',
-  '/books': 'Books — Driven by Design',
-  '/shop': 'Shop — Driven by Design',
-  '/about': 'About Michael L. Clay — Driven by Design',
-  '/contact': 'Contact — Driven by Design',
+  '/': 'Driven by Design Creative Agency LLC - Multimedia Visual Storytelling',
+  '/my-journey': 'My Journey - Driven by Design',
+  '/classes': 'The Art of Visual Storytelling - Driven by Design',
+  '/story-driven': 'Story Driven - Driven by Design',
+  '/books': 'Books - Driven by Design',
+  '/filmmaking': 'Filmmaking - Driven by Design',
+  '/documentary-trailers': 'Documentary Trailers - Driven by Design',
+  '/family-photography': 'Family Photography - Driven by Design',
+  '/commercial-photography': 'Commercial Photography - Driven by Design',
+  '/testimonials': 'Testimonials - Driven by Design',
+  '/contact': 'Contact Me - Driven by Design',
+  '/shop': 'Shop - Driven by Design',
+  '/packages': 'Packages - Driven by Design',
 }
 
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
-    document.title = titles[pathname] ?? 'Driven by Design'
+    document.title = titles[pathname] ?? 'Driven by Design Creative Agency'
   }, [pathname])
   return null
 }
 
+function NavLinkItem({ item, onClick }: { item: NavItem; onClick: () => void }) {
+  if (item.href) {
+    return (
+      <a href={item.href} target="_blank" rel="noreferrer" onClick={onClick}>
+        {item.label}
+      </a>
+    )
+  }
+  return (
+    <NavLink to={item.to ?? '/'} onClick={onClick}>
+      {item.label}
+    </NavLink>
+  )
+}
+
 function Header() {
-  const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const onHero = pathname === '/' && !scrolled
+  const { pathname } = useLocation()
 
   useEffect(() => {
     setOpen(false)
   }, [pathname])
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  const className = [
-    'header',
-    onHero ? 'on-dark' : 'solid',
-    open ? 'open' : '',
-  ]
-    .filter(Boolean)
-    .join(' ')
-
   return (
-    <header className={className}>
+    <header className={`header site-bar${open ? ' open' : ''}`}>
       <div className="header-inner">
         <NavLink to="/" end className="brand" onClick={() => setOpen(false)}>
-          <span className="brand-mark">DBD</span>
-          <span className="brand-text">
-            <strong>Driven by Design</strong>
-            <span>Creative Agency</span>
-          </span>
+          <img className="site-logo" src={asset('/images/dbd-logo.png')} alt="Driven by Design" />
         </NavLink>
         <button
           type="button"
@@ -68,14 +66,20 @@ function Header() {
           <span />
         </button>
         <nav className="nav" aria-label="Primary">
-          {nav.map((item) => (
-            <NavLink key={item.to} to={item.to}>
-              {item.label}
-            </NavLink>
-          ))}
-          <Link to="/contact" className="btn" style={{ color: '#fffaf3' }}>
-            Let's talk
-          </Link>
+          {nav.map((item) =>
+            item.children ? (
+              <div className="has-sub" key={item.label}>
+                <NavLinkItem item={item} onClick={() => setOpen(false)} />
+                <div className="subnav">
+                  {item.children.map((child) => (
+                    <NavLinkItem key={child.label} item={child} onClick={() => setOpen(false)} />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <NavLinkItem key={item.label} item={item} onClick={() => setOpen(false)} />
+            ),
+          )}
         </nav>
       </div>
     </header>
@@ -84,65 +88,14 @@ function Header() {
 
 function Footer() {
   return (
-    <footer className="footer">
-      <div className="wrap footer-grid">
-        <div>
-          <h2>Tell the story while it is still in the room.</h2>
-          <p className="muted" style={{ color: 'rgba(244,239,230,0.7)' }}>
-            {site.sentence}
-          </p>
-        </div>
-        <div>
-          <h3>Visit</h3>
-          <ul>
-            {nav.map((item) => (
-              <li key={item.to}>
-                <NavLink to={item.to}>{item.label}</NavLink>
-              </li>
-            ))}
-            <li>
-              <NavLink to="/contact">Contact</NavLink>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3>Studio</h3>
-          <ul>
-            <li>
-              <a href={`mailto:${site.email}`}>{site.email}</a>
-            </li>
-            <li>
-              <a href={site.phoneHref}>{site.phone}</a>
-            </li>
-            <li>
-              <a href={site.instagram} target="_blank" rel="noreferrer">
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a href={site.proofing} target="_blank" rel="noreferrer">
-                Client galleries
-              </a>
-            </li>
-            <li>
-              <a href={site.youtube} target="_blank" rel="noreferrer">
-                YouTube
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="wrap footer-bottom">
-        <span>
-          © {new Date().getFullYear()} {site.legal}
-        </span>
-        <span>South Jersey · Philadelphia · On the road</span>
-      </div>
+    <footer className="orig-footer">
+      Driven by Design Creative Agency LLC. Copyright © 2017
     </footer>
   )
 }
 
 export default function Layout() {
+  const { pathname } = useLocation()
   return (
     <>
       <ScrollToTop />
@@ -151,7 +104,7 @@ export default function Layout() {
       </a>
       <Header />
       <Outlet />
-      <Footer />
+      {pathname === '/' ? null : <Footer />}
     </>
   )
 }

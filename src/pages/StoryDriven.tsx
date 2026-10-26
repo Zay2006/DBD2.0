@@ -1,135 +1,52 @@
 import { Link } from 'react-router-dom'
-import PageHero from '../components/PageHero'
-import { asset } from '../data/site'
+import OrigHero from '../components/OrigHero'
+import { asset, site } from '../data/site'
 
-const faqs = [
-  {
-    q: 'Is this a digital game?',
-    a: 'No. Story Driven is a physical board game with cards. There is also a life-size 1,200 square-foot version that travels for family events.',
-  },
-  {
-    q: 'What grade is it for?',
-    a: 'It is not locked to a grade. The game meets players at their writing level, from early emergent to fluent, with more than ten types of play including practice cards.',
-  },
-  {
-    q: 'Is it tied to a curriculum?',
-    a: 'It is a standalone enrichment and assessment tool. It can sit beside any ELA, SEL, or counseling curriculum. Bring your own prompt, play, then return to the game.',
-  },
-  {
-    q: 'Do you have to finish a story in six minutes?',
-    a: 'No. Players write throughout the whole game. It is not meant to be rushed.',
-  },
-  {
-    q: 'Do you offer professional development?',
-    a: 'Yes. Michael leads PD for teachers, counselors, and teaching artists on using Story Driven in classrooms and family programs. Write to book a date.',
-  },
-]
-
-const states = [
-  'Alabama',
-  'Connecticut',
-  'Illinois',
-  'Indiana',
-  'Maryland',
-  'New Jersey',
-  'New York',
-  'North Carolina',
-  'Ohio',
-  'Pennsylvania',
-  'Tennessee',
-  'Virginia',
+const points = [
+  'Alleviates writing anxiety.',
+  'The starter kit to creative writing.',
+  'Creative writing through your own lens.',
+  'An enrichment and learning assessment tool for professionals.',
+  'Helps its players think outside the box (ELA Writing, Vocabulary & SEL).',
+  'Develop future script writers.',
+  'Child & parent engagement.',
+  'Bringing families together to share stories.',
+  'Fun for the entire family.',
 ]
 
 export default function StoryDriven() {
   return (
     <main id="main">
-      <PageHero
-        kicker="Story Driven"
-        title="Unlocking writer's block — at the table and on the lawn."
-        lede="A fun, educational board game that helps different levels of writers work at their own pace. Thirty to sixty minutes. More than ten ways to play."
-      />
-
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="wrap split">
-          <img
-            src={asset('/images/story-cards.jpg')}
-            alt="Story Driven board and cards"
-            className="contain"
-          />
-          <div>
-            <p className="kicker">The tabletop game</p>
-            <h2>Writing through your own lens.</h2>
-            <ul>
-              <li>Alleviates writing anxiety</li>
-              <li>Starter kit for creative writing</li>
-              <li>ELA writing, vocabulary, and SEL</li>
-              <li>Child and parent engagement</li>
-              <li>Assessment tool for professionals</li>
-              <li>A path toward script writing</li>
-            </ul>
-            <div className="stat-row" style={{ gridTemplateColumns: '1fr 1fr' }}>
-              <div className="stat">
-                <b>30–60 min</b>
-                <span>Typical play</span>
-              </div>
-              <div className="stat">
-                <b>4–6</b>
-                <span>Players</span>
-              </div>
+      <OrigHero image={asset('/images/story-cards.jpg')} title="Story Driven" />
+      <section className="orig-section">
+        <div className="orig-copy" style={{ textAlign: 'center' }}>
+          <h2>A fun, educational and interactive board game to aid different levels of writers at their pace.</h2>
+          <div className="orig-grid" style={{ marginTop: '2rem', textAlign: 'left' }}>
+            <div className="orig-card">
+              <h3>For All Ages</h3>
+              <p>4–6 Players</p>
             </div>
-            <div className="btn-row">
-              <Link className="btn" to="/shop">
-                Story Driven for professionals · $300
-              </Link>
-              <Link className="btn outline" to="/contact">
-                Book PD or a family event
-              </Link>
+            <div className="orig-card">
+              <h3>30–60 Minutes</h3>
+              <p>Over 10 types of gameplay</p>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="section alt">
-        <div className="wrap split reverse">
-          <div>
-            <p className="kicker">Shining a Light on Our Stories</p>
-            <h2>Families become the pieces.</h2>
-            <p className="lede">
-              In summer 2026 Michael and his wife ran a three-part series on a life-size board. Families walked it, wrote, and filmed their own stories. The big board is now on the road.
-            </p>
-            <p>
-              It is built for family conversation: roots, grief, humor, and the thing nobody has said yet.
-            </p>
-          </div>
-          <img
-            src={asset('/images/story-life.jpg')}
-            alt="Life-sized Story Driven board on a lawn"
-          />
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="wrap">
-          <p className="kicker">In play across</p>
-          <h2 style={{ marginBottom: '1.2rem' }}>More than ten states</h2>
-          <div className="states">
-            {states.map((name) => (
-              <span key={name}>{name}</span>
+          <ul className="orig-list" style={{ marginTop: '1.5rem', textAlign: 'left' }}>
+            {points.map((item) => (
+              <li key={item}>{item}</li>
             ))}
+          </ul>
+          <blockquote style={{ marginTop: '2rem', fontStyle: 'italic', color: '#333' }}>
+            “What I really love is that this is a learning tool. This is going to get our students excited for writing!!! They will be able to grapple with vocabulary and themes. You could customize the play style to your classroom needs.”
+          </blockquote>
+          <div className="orig-hero-ctas" style={{ marginTop: '2rem' }}>
+            <a className="orig-btn solid" href={site.storyDriven}>
+              Visit the game site
+            </a>
+            <Link className="orig-btn solid" to="/shop" style={{ background: '#fff', color: '#207cbe', border: '1px solid #207cbe' }}>
+              Shop
+            </Link>
           </div>
-        </div>
-      </section>
-
-      <section className="section alt">
-        <div className="wrap-narrow faq">
-          <p className="kicker">Questions</p>
-          <h2 style={{ marginBottom: '1.4rem' }}>Told by its players</h2>
-          {faqs.map((item) => (
-            <details key={item.q}>
-              <summary>{item.q}</summary>
-              <p>{item.a}</p>
-            </details>
-          ))}
         </div>
       </section>
     </main>
