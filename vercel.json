@@ -1,3 +1,24 @@
 {
+  "redirects": [
+    { "source": "/my-journey", "destination": "https://dbdcreativeagency.com/my-journey/", "permanent": false },
+    { "source": "/classes", "destination": "https://dbdcreativeagency.com/visual-storytelling/", "permanent": false },
+    { "source": "/visual-storytelling", "destination": "https://dbdcreativeagency.com/visual-storytelling/", "permanent": false },
+    { "source": "/story-driven", "destination": "https://www.thestorydrivengame.com/", "permanent": false },
+    { "source": "/books", "destination": "https://dbdcreativeagency.com/ifoundareason/", "permanent": false },
+    { "source": "/ifoundareason", "destination": "https://dbdcreativeagency.com/ifoundareason/", "permanent": false },
+    { "source": "/filmmaking", "destination": "https://dbdcreativeagency.com/filmmaking/", "permanent": false },
+    { "source": "/documentary-trailers", "destination": "https://dbdcreativeagency.com/documentary-trailers/", "permanent": false },
+    { "source": "/family-photography", "destination": "https://dbdcreativeagency.com/family-photography/", "permanent": false },
+    { "source": "/commercial-photography", "destination": "https://dbdcreativeagency.com/commercial-photography/", "permanent": false },
+    { "source": "/testimonials", "destination": "https://dbdcreativeagency.com/testimonials/", "permanent": false },
+    { "source": "/contact", "destination": "https://dbdcreativeagency.com/contact/", "permanent": false },
+    { "source": "/shop", "destination": "https://dbdcreativeagency.com/store-2/", "permanent": false },
+    { "source": "/store-2", "destination": "https://dbdcreativeagency.com/store-2/", "permanent": false },
+    { "source": "/packages", "destination": "https://dbdcreativeagency.com/packages/", "permanent": false },
+    { "source": "/about", "destination": "https://dbdcreativeagency.com/my-journey/", "permanent": false },
+    { "source": "/work", "destination": "https://dbdcreativeagency.com/family-photography/", "permanent": false },
+    { "source": "/hire", "destination": "https://dbdcreativeagency.com/commercial-photography/", "permanent": false },
+    { "source": "/programs", "destination": "https://dbdcreativeagency.com/visual-storytelling/", "permanent": false }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

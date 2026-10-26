@@ -29,30 +29,58 @@ export type NavItem = {
 
 export const nav: NavItem[] = [
   { to: '/', label: 'Home' },
-  { to: '/my-journey', label: 'My Journey' },
-  { to: '/classes', label: 'Classes' },
-  { to: '/story-driven', label: 'Story Driven' },
-  { to: '/books', label: 'Books' },
+  { href: `${site.live}/my-journey/`, label: 'My Journey' },
+  { href: `${site.live}/visual-storytelling/`, label: 'Classes' },
+  { href: site.storyDriven, label: 'Story Driven' },
+  { href: `${site.live}/ifoundareason/`, label: 'Books' },
   {
-    to: '/filmmaking',
+    href: `${site.live}/filmmaking/`,
     label: 'Filmmaking',
     children: [
-      { to: '/filmmaking', label: 'Filmmaking' },
-      { to: '/documentary-trailers', label: 'Documentary Trailers' },
+      { href: `${site.live}/filmmaking/`, label: 'Filmmaking' },
+      { href: `${site.live}/documentary-trailers/`, label: 'Documentary Trailers' },
     ],
   },
   {
-    to: '/family-photography',
+    href: `${site.live}/family-photography/`,
     label: 'Photography',
     children: [
-      { to: '/family-photography', label: 'Family Photography' },
-      { to: '/commercial-photography', label: 'Commercial Photography' },
+      { href: `${site.live}/family-photography/`, label: 'Family Photography' },
+      { href: `${site.live}/commercial-photography/`, label: 'Commercial Photography' },
       { href: site.proofing, label: 'Client Portfolio' },
     ],
   },
-  { to: '/testimonials', label: 'Testimonials' },
-  { to: '/contact', label: 'Contact Me' },
+  { href: `${site.live}/testimonials/`, label: 'Testimonials' },
+  { href: `${site.live}/contact/`, label: 'Contact Me' },
 ]
+
+/** Old rebuild paths → the live WordPress (or Story Driven) page. */
+export const liveRoutes: Record<string, string> = {
+  '/my-journey': `${site.live}/my-journey/`,
+  '/classes': `${site.live}/visual-storytelling/`,
+  '/visual-storytelling': `${site.live}/visual-storytelling/`,
+  '/story-driven': site.storyDriven,
+  '/books': `${site.live}/ifoundareason/`,
+  '/ifoundareason': `${site.live}/ifoundareason/`,
+  '/filmmaking': `${site.live}/filmmaking/`,
+  '/documentary-trailers': `${site.live}/documentary-trailers/`,
+  '/family-photography': `${site.live}/family-photography/`,
+  '/commercial-photography': `${site.live}/commercial-photography/`,
+  '/testimonials': `${site.live}/testimonials/`,
+  '/contact': `${site.live}/contact/`,
+  '/shop': `${site.live}/store-2/`,
+  '/store-2': `${site.live}/store-2/`,
+  '/packages': `${site.live}/packages/`,
+  '/about': `${site.live}/my-journey/`,
+  '/work': `${site.live}/family-photography/`,
+  '/hire': `${site.live}/commercial-photography/`,
+  '/programs': `${site.live}/visual-storytelling/`,
+}
+
+export function liveUrlFor(pathname: string) {
+  const key = pathname.replace(/\/$/, '') || '/'
+  return liveRoutes[key] ?? null
+}
 
 export type MapCluster = 'see' | 'make' | 'begin'
 
@@ -81,7 +109,7 @@ export const mapNodes: MapNode[] = [
     label: 'My Journey',
     kicker: 'Michael',
     hint: 'How the studio began',
-    to: '/my-journey',
+    href: `${site.live}/my-journey/`,
     image: asset('/images/michael.jpg'),
     x: 50,
     y: 16,
@@ -92,7 +120,7 @@ export const mapNodes: MapNode[] = [
     label: 'Family Photography',
     kicker: 'Portraits',
     hint: 'Weddings, portraits, real rooms',
-    to: '/family-photography',
+    href: `${site.live}/family-photography/`,
     image: asset('/images/family.jpg'),
     x: 18,
     y: 28,
@@ -103,7 +131,7 @@ export const mapNodes: MapNode[] = [
     label: 'Commercial',
     kicker: 'Studio',
     hint: 'Orgs who serve children',
-    to: '/commercial-photography',
+    href: `${site.live}/commercial-photography/`,
     image: asset('/images/jhec-cover.jpg'),
     x: 82,
     y: 28,
@@ -114,7 +142,7 @@ export const mapNodes: MapNode[] = [
     label: 'Filmmaking',
     kicker: 'Motion',
     hint: 'Documentary and promo',
-    to: '/filmmaking',
+    href: `${site.live}/filmmaking/`,
     image: asset('/images/garry.jpg'),
     x: 11,
     y: 47,
@@ -125,7 +153,7 @@ export const mapNodes: MapNode[] = [
     label: 'Docu Trailers',
     kicker: 'Short form',
     hint: 'Stories cut to the bone',
-    to: '/documentary-trailers',
+    href: `${site.live}/documentary-trailers/`,
     image: asset('/images/hancock.jpg'),
     x: 89,
     y: 47,
@@ -136,7 +164,7 @@ export const mapNodes: MapNode[] = [
     label: 'Classes',
     kicker: 'Schools',
     hint: 'The Art of Visual Storytelling',
-    to: '/classes',
+    href: `${site.live}/visual-storytelling/`,
     image: asset('/images/avs.jpg'),
     x: 17,
     y: 66,
@@ -147,7 +175,7 @@ export const mapNodes: MapNode[] = [
     label: 'Story Driven',
     kicker: 'The game',
     hint: "Unlocking writer's block",
-    to: '/story-driven',
+    href: site.storyDriven,
     image: asset('/images/story-cards.jpg'),
     x: 83,
     y: 66,
@@ -158,7 +186,7 @@ export const mapNodes: MapNode[] = [
     label: 'Books',
     kicker: 'Print',
     hint: 'I Found a Reason to Speak',
-    to: '/books',
+    href: `${site.live}/ifoundareason/`,
     image: asset('/images/book-ifound.jpg'),
     x: 28,
     y: 82,
@@ -169,7 +197,7 @@ export const mapNodes: MapNode[] = [
     label: 'Shop',
     kicker: 'Store',
     hint: 'Games and kits',
-    to: '/shop',
+    href: `${site.live}/store-2/`,
     image: asset('/images/story-board.png'),
     x: 72,
     y: 82,
@@ -180,233 +208,10 @@ export const mapNodes: MapNode[] = [
     label: 'Contact Me',
     kicker: 'Begin',
     hint: "Let's work together",
-    to: '/contact',
+    href: `${site.live}/contact/`,
     image: asset('/images/mccarter.jpg'),
     x: 50,
     y: 86,
     cluster: 'begin',
-  },
-]
-
-export type WorkItem = {
-  src: string
-  alt: string
-  title: string
-  caption: string
-  category: 'Photography' | 'Film' | 'Community'
-}
-
-export const work: WorkItem[] = [
-  {
-    src: asset('/images/hero-loc.jpg'),
-    alt: 'Soul line dancers in a community hall',
-    title: 'Community on the Line',
-    caption: 'Library of Congress Community Collections',
-    category: 'Community',
-  },
-  {
-    src: asset('/images/loc-dance.jpg'),
-    alt: 'Dancers moving together at a community event',
-    title: 'Atrium Dance Studio',
-    caption: 'Library of Congress · soul line dancing',
-    category: 'Photography',
-  },
-  {
-    src: asset('/images/family.jpg'),
-    alt: 'A couple embracing at a birthday celebration',
-    title: 'Simone, 40',
-    caption: 'Candid family documentary',
-    category: 'Photography',
-  },
-  {
-    src: asset('/images/family-glaze.jpg'),
-    alt: 'Family portrait session',
-    title: 'The Glaze Family',
-    caption: 'Portraiture',
-    category: 'Photography',
-  },
-  {
-    src: asset('/images/wedding-yang.jpg'),
-    alt: 'Wedding portrait',
-    title: 'The Yang Wedding',
-    caption: 'Wedding documentary',
-    category: 'Photography',
-  },
-  {
-    src: asset('/images/wedding.jpg'),
-    alt: 'Wedding day moment',
-    title: 'Wedding day',
-    caption: 'Unposed coverage',
-    category: 'Photography',
-  },
-  {
-    src: asset('/images/headshots.jpg'),
-    alt: 'Outdoor professional headshot of a woman smiling',
-    title: 'Corporate headshots',
-    caption: 'For speaking, faculty, and social',
-    category: 'Photography',
-  },
-  {
-    src: asset('/images/jhec.jpg'),
-    alt: 'Education consultant teaching in a classroom',
-    title: 'Jennifer Howard Education Consulting',
-    caption: 'Editorial portraiture, 2026',
-    category: 'Photography',
-  },
-  {
-    src: asset('/images/mccarter.jpg'),
-    alt: 'Crowd at an outdoor theatre block party',
-    title: 'McCarter Theatre Block Party',
-    caption: 'Event photography',
-    category: 'Photography',
-  },
-  {
-    src: asset('/images/favorites.jpg'),
-    alt: 'Documentary moment from a community gathering',
-    title: 'Favorites, 2019',
-    caption: 'Community event',
-    category: 'Photography',
-  },
-  {
-    src: asset('/images/avs.jpg'),
-    alt: 'Elementary students rehearsing a story in their classroom',
-    title: 'Art of Visual Storytelling',
-    caption: "Cooper's Poynt Family School, Camden",
-    category: 'Film',
-  },
-  {
-    src: asset('/images/hancock.jpg'),
-    alt: 'Youth documentary portrait, Hancock Squad',
-    title: '315 Hancock Squad',
-    caption: 'Documentary still',
-    category: 'Film',
-  },
-  {
-    src: asset('/images/garry.jpg'),
-    alt: 'On the Garry family documentary project poster',
-    title: 'On the Garry',
-    caption: 'Family oral history · Penn MAKUU, Willingboro Library',
-    category: 'Film',
-  },
-  {
-    src: asset('/images/story-legacy.jpg'),
-    alt: 'Students gathered around the Story Driven board game',
-    title: 'Story Driven at Legacy Charter',
-    caption: 'Classroom residency',
-    category: 'Community',
-  },
-  {
-    src: asset('/images/story-life.jpg'),
-    alt: 'Life-sized Story Driven board game laid out on a lawn',
-    title: 'Shining a Light on Our Stories',
-    caption: '1,200 sq ft board · families walk the game',
-    category: 'Community',
-  },
-  {
-    src: asset('/images/book-signing.jpg'),
-    alt: 'First book signing for I Found a Reason to Speak',
-    title: 'I Found a Reason to Speak',
-    caption: 'First book signing, December 2024',
-    category: 'Community',
-  },
-  {
-    src: asset('/images/expo.jpg'),
-    alt: 'Story Driven table at a homeschool expo',
-    title: 'Maryland Homeschool Expo',
-    caption: 'Story Driven on the road',
-    category: 'Community',
-  },
-  {
-    src: asset('/images/sitwrite.jpg'),
-    alt: 'Sit and write Story Driven session',
-    title: 'Sit & Write',
-    caption: 'Family writing session',
-    category: 'Community',
-  },
-]
-
-export const testimonials = [
-  {
-    quote:
-      'If you are looking for a creative agency that is professional, communicative, efficient, and delivers a customer-centered product on time, choose Driven by Design.',
-    name: 'World Cafe Live',
-    role: 'Arts education documentation',
-  },
-  {
-    quote:
-      'These shots are amazing. We have been dealing with photographers lately who are not at your level of expertise. These are very, very refreshing.',
-    name: 'McCarter Theatre',
-    role: 'Event photography',
-  },
-  {
-    quote:
-      "Mr. Clay's program is innovative to say the least. The impact on my students is monumental. They were script writers and camera operators, and they were ready.",
-    name: "Cooper's Poynt Family School",
-    role: 'Art of Visual Storytelling',
-  },
-  {
-    quote:
-      'Michael over-delivered. Under immense time constraints he produced four promotional videos that elevated our nominations to award-worthy status.',
-    name: 'Polo Ridge Apartments',
-    role: 'Garden State Awards',
-  },
-  {
-    quote:
-      'We have worked with several videographers over the years and this was the best experience we have had. Polished, professional, and so quick we were amazed.',
-    name: 'Whitesbog Preservation Trust',
-    role: 'Oral history, NJ Humanities Council',
-  },
-  {
-    quote:
-      'He curates them for you. He understood what the company was seeking and was able to communicate that in the photos.',
-    name: 'Segunda Quimbamba',
-    role: 'Student recital',
-  },
-]
-
-export const partners = [
-  'Library of Congress',
-  'Smithsonian Center for Folklife & Cultural Heritage',
-  'African American Museum of Philadelphia',
-  'University of Pennsylvania MAKUU',
-  'McCarter Theatre',
-  'World Cafe Live',
-]
-
-export const timeline = [
-  {
-    year: '2009',
-    title: 'The calling',
-    body: 'Began teaching entrepreneurship at Leap Academy and found the work was really about students’ lives.',
-  },
-  {
-    year: '2013',
-    title: 'MKC Photography',
-    body: 'Opened a photography practice with his wife, then spent years documenting families and organizations in South Jersey.',
-  },
-  {
-    year: '2017',
-    title: 'Driven by Design',
-    body: 'Combined the businesses into Driven by Design Creative Agency LLC — one studio for stills, film, and teaching.',
-  },
-  {
-    year: '2018',
-    title: 'Classrooms and history',
-    body: 'Designed the Art of Visual Storytelling and launched Driven For Him Inc, a 501(c)(3) for teaching history through visual story.',
-  },
-  {
-    year: '2022',
-    title: 'Library of Congress',
-    body: 'Photographed Community on the Line: Soul Line Dancing for the Library of Congress Community Collections — then returned in 2023.',
-  },
-  {
-    year: '2025',
-    title: 'Story Driven',
-    body: 'Released Story Driven: Unlocking Writer’s Block, a physical writing game, and published I Found a Reason to Speak.',
-  },
-  {
-    year: '2026',
-    title: 'The board on the road',
-    body: 'With his wife, staged Shining a Light on Our Stories — families walking a 1,200 sq ft version of the game, writing and filming as they went.',
   },
 ]
