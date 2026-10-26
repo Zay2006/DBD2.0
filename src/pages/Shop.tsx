@@ -1,76 +1,35 @@
 import { Link } from 'react-router-dom'
-import PageHero from '../components/PageHero'
+import OrigHero from '../components/OrigHero'
 import { asset, site } from '../data/site'
-
-const products = [
-  {
-    title: "Story Driven for Professionals",
-    price: '$300',
-    image: asset('/images/story-board.png'),
-    alt: 'Story Driven board game',
-    body: 'The physical writing game for classrooms, counselors, and teaching artists. Meets students at their writing level. Aligns with ELA, writing, and SEL.',
-    href: site.storyDriven,
-    cta: 'Visit the game site',
-  },
-  {
-    title: "Finding My Niche' e-book",
-    price: '$19.99',
-    image: asset('/images/finding-niche.jpg'),
-    alt: "Cover of Finding My Niche ebook",
-    body: 'A look at the photography fields Michael tried, and the troubles on the way to a practice that actually fits.',
-    href: `mailto:${site.email}?subject=${encodeURIComponent("Order Finding My Niche' e-book")}`,
-    cta: 'Email to purchase',
-  },
-  {
-    title: "Finding My Niche' class",
-    price: '$99.99',
-    image: asset('/images/finding-niche.jpg'),
-    alt: "Finding My Niche class artwork",
-    body: 'Self-paced class for hobbyists and freelancers: camera settings, lighting, niches, and the long apprenticeship of getting good.',
-    href: `mailto:${site.email}?subject=${encodeURIComponent("Order Finding My Niche' class")}`,
-    cta: 'Email to enroll',
-  },
-]
 
 export default function Shop() {
   return (
     <main id="main">
-      <PageHero
-        kicker="Shop"
-        title="Games, classes, and a book you can put on the table."
-        lede="Story Driven now has its own site. Photography classes still go through the studio. The family book is on Amazon."
-      />
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="wrap">
-          <div className="product-grid">
-            {products.map((item) => (
-              <article className="product" key={item.title}>
-                <img src={item.image} alt={item.alt} />
-                <div className="product-body">
-                  <h2>{item.title}</h2>
-                  <p className="amount">{item.price}</p>
-                  <p>{item.body}</p>
-                  {'to' in item && item.to ? (
-                    <Link className="btn" to={item.to} style={{ marginTop: 'auto' }}>
-                      {item.cta}
-                    </Link>
-                  ) : (
-                    <a className="btn" href={item.href} style={{ marginTop: 'auto' }}>
-                      {item.cta}
-                    </a>
-                  )}
-                </div>
-              </article>
-            ))}
-          </div>
-          <p className="muted" style={{ marginTop: '2rem' }}>
-            Looking for <em>I Found a Reason to Speak</em>?{' '}
-            <a href={site.amazonBook} target="_blank" rel="noreferrer">
-              Buy it on Amazon
+      <OrigHero image={asset('/images/story-board.png')} title="Shop" />
+      <section className="orig-section">
+        <div className="orig-grid">
+          <article className="orig-card">
+            <img src={asset('/images/story-cards.jpg')} alt="Story Driven for Professionals" />
+            <h3>Story Driven for Professionals</h3>
+            <p>Story Driven: Unlocking Writer’s Block is a fun &amp; interactive creative writing board game.</p>
+            <p className="orig-price">Visit the game site</p>
+            <a className="orig-btn solid" href={site.storyDriven}>
+              Buy / learn more
             </a>
-            , or <Link to="/books">read about the book</Link>.
-          </p>
+          </article>
+          <article className="orig-card">
+            <img src={asset('/images/book-ifound.jpg')} alt="I Found A Reason To Speak" />
+            <h3>I Found A Reason To Speak</h3>
+            <p>Purchase on Amazon &amp; Kindle.</p>
+            <a className="orig-btn solid" href={site.amazonBook} target="_blank" rel="noreferrer">
+              Amazon
+            </a>
+          </article>
         </div>
+        <p className="orig-copy" style={{ textAlign: 'center', marginTop: '2rem' }}>
+          Non-profits needing a purchase order: email {site.email}.{' '}
+          <Link to="/contact">Contact Me</Link>
+        </p>
       </section>
     </main>
   )

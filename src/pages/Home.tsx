@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from 'react'
-import { asset, mapClusters, mapNodes, site } from '../data/site'
+import { Link } from 'react-router-dom'
+import { asset, mapClusters, mapNodes } from '../data/site'
 
 const INTRO_SRC = asset('/audio/dbd-intro.mp3')
 const HERO_SRC = asset('/images/hero-loc.jpg')
@@ -229,33 +230,44 @@ export default function Home() {
             <p className="cluster-label">{cluster.label}</p>
             {mapNodes
               .filter((node) => node.cluster === cluster.id)
-              .map((node, index) => (
-                <a
-                  key={node.id}
-                  className={`mindmap-node mindmap-node-${node.id}${active?.id === node.id ? ' is-active' : ''}`}
-                  href={node.href}
-                  style={{
-                    left: `${node.x}%`,
-                    top: `${node.y}%`,
-                    animationDelay: `${280 + index * 80}ms`,
-                  }}
-                  onPointerEnter={() => setHovered(node.id)}
-                  onFocus={() => setHovered(node.id)}
-                  onPointerLeave={() => setHovered((id) => (id === node.id ? null : id))}
-                  onBlur={() => setHovered((id) => (id === node.id ? null : id))}
-                >
-                  <span className="kicker">{node.kicker}</span>
-                  <strong>{node.label}</strong>
-                  <span>{node.hint}</span>
-                </a>
-              ))}
+              .map((node, index) => {
+                const className = `mindmap-node mindmap-node-${node.id}${active?.id === node.id ? ' is-active' : ''}`
+                const style = {
+                  left: `${node.x}%`,
+                  top: `${node.y}%`,
+                  animationDelay: `${280 + index * 80}ms`,
+                }
+                const body = (
+                  <>
+                    <span className="kicker">{node.kicker}</span>
+                    <strong>{node.label}</strong>
+                    <span>{node.hint}</span>
+                  </>
+                )
+                const events = {
+                  onPointerEnter: () => setHovered(node.id),
+                  onFocus: () => setHovered(node.id),
+                  onPointerLeave: () => setHovered((id) => (id === node.id ? null : id)),
+                  onBlur: () => setHovered((id) => (id === node.id ? null : id)),
+                }
+                if (node.href) {
+                  return (
+                    <a key={node.id} className={className} style={style} href={node.href} {...events}>
+                      {body}
+                    </a>
+                  )
+                }
+                return (
+                  <Link key={node.id} className={className} style={style} to={node.to ?? '/'} {...events}>
+                    {body}
+                  </Link>
+                )
+              })}
           </div>
         ))}
       </section>
 
-      <p className="stage-note">
-        Opens pages on {site.live.replace('https://', '')}
-      </p>
+      <p className="stage-note">Pick a branch to open that page</p>
     </main>
   )
 }

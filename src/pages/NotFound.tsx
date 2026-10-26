@@ -2,19 +2,13 @@ import { Link } from 'react-router-dom'
 
 export default function NotFound() {
   return (
-    <main id="main" className="page-hero">
-      <div className="wrap">
-        <p className="kicker">404</p>
-        <h1>This page wandered off.</h1>
-        <p className="lede">Try the work, the game, or write Michael directly.</p>
-        <div className="btn-row">
-          <Link className="btn" to="/">
-            Home
-          </Link>
-          <Link className="btn outline" to="/contact">
-            Contact
-          </Link>
-        </div>
+    <main id="main" className="orig-section">
+      <div className="orig-copy" style={{ textAlign: 'center' }}>
+        <h2>Page not found</h2>
+        <p>This page wandered off the board.</p>
+        <Link className="orig-btn solid" to="/">
+          Home
+        </Link>
       </div>
     </main>
   )

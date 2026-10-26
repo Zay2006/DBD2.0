@@ -1,44 +1,21 @@
-import InquiryForm from '../components/InquiryForm'
-import PageHero from '../components/PageHero'
+import OrigHero from '../components/OrigHero'
 import { asset, site } from '../data/site'
 
 export default function Contact() {
   return (
     <main id="main">
-      <PageHero
-        kicker="Contact"
-        title="Let's work together."
-        lede="Photography, videography, teaching artist residencies, creative writing, and board-game programs. South Jersey, Philadelphia, and travel by arrangement."
-      />
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="wrap split">
-          <InquiryForm />
-          <div>
-            <p className="kicker">Studio</p>
-            <h2>Michael L. Clay</h2>
-            <p>
-              <a href={`mailto:${site.email}`}>{site.email}</a>
-              <br />
-              <a href={site.phoneHref}>{site.phone}</a>
-            </p>
-            <p>
-              <a href={site.instagram} target="_blank" rel="noreferrer">
-                Instagram @dbdcreativeagency
-              </a>
-              <br />
-              <a href={site.proofing} target="_blank" rel="noreferrer">
-                Client proofing galleries
-              </a>
-            </p>
-            <p className="muted">
-              Say who you are, the date if you have one, and what the story needs to do in the world. Michael will write back.
-            </p>
-            <img
-              src={asset('/images/michael.jpg')}
-              alt="Michael L. Clay"
-              style={{ marginTop: '1.5rem', maxHeight: '28rem', objectFit: 'cover' }}
-            />
-          </div>
+      <OrigHero image={asset('/images/michael.jpg')} title="Contact Me" />
+      <section className="orig-section">
+        <div className="orig-copy" style={{ textAlign: 'center' }}>
+          <h2>Let&apos;s Work Together</h2>
+          <p>Michael L. Clay</p>
+          <p>Photography | Videography | Teaching Artist | Creative Writing | Board &amp; Card Game Development</p>
+          <p>
+            Email:{' '}
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+            <br />
+            Phone: <a href={site.phoneHref}>{site.phone}</a>
+          </p>
         </div>
       </section>
     </main>

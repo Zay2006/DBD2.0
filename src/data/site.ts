@@ -24,28 +24,34 @@ export type NavItem = {
   label: string
   to?: string
   href?: string
+  children?: NavItem[]
 }
 
 export const nav: NavItem[] = [
-  { to: '/work', label: 'Work' },
-  { to: '/hire', label: 'Hire' },
-  { to: '/programs', label: 'Programs' },
-  { href: site.storyDriven, label: 'Story Driven' },
-  { to: '/books', label: 'Books' },
-  { to: '/shop', label: 'Shop' },
-  { to: '/about', label: 'About' },
-]
-
-export const liveNav: NavItem[] = [
   { to: '/', label: 'Home' },
-  { href: `${site.live}/my-journey/`, label: 'My Journey' },
-  { href: `${site.live}/visual-storytelling/`, label: 'Classes' },
-  { href: site.storyDriven, label: 'Story Driven' },
-  { href: `${site.live}/ifoundareason/`, label: 'Books' },
-  { href: `${site.live}/filmmaking/`, label: 'Filmmaking' },
-  { href: `${site.live}/family-photography/`, label: 'Photography' },
-  { href: `${site.live}/testimonials/`, label: 'Testimonials' },
-  { href: `${site.live}/contact/`, label: 'Contact Me' },
+  { to: '/my-journey', label: 'My Journey' },
+  { to: '/classes', label: 'Classes' },
+  { to: '/story-driven', label: 'Story Driven' },
+  { to: '/books', label: 'Books' },
+  {
+    to: '/filmmaking',
+    label: 'Filmmaking',
+    children: [
+      { to: '/filmmaking', label: 'Filmmaking' },
+      { to: '/documentary-trailers', label: 'Documentary Trailers' },
+    ],
+  },
+  {
+    to: '/family-photography',
+    label: 'Photography',
+    children: [
+      { to: '/family-photography', label: 'Family Photography' },
+      { to: '/commercial-photography', label: 'Commercial Photography' },
+      { href: site.proofing, label: 'Client Portfolio' },
+    ],
+  },
+  { to: '/testimonials', label: 'Testimonials' },
+  { to: '/contact', label: 'Contact Me' },
 ]
 
 export type MapCluster = 'see' | 'make' | 'begin'
@@ -55,7 +61,8 @@ export type MapNode = {
   label: string
   kicker: string
   hint: string
-  href: string
+  to?: string
+  href?: string
   image: string
   x: number
   y: number
@@ -74,7 +81,7 @@ export const mapNodes: MapNode[] = [
     label: 'My Journey',
     kicker: 'Michael',
     hint: 'How the studio began',
-    href: `${site.live}/my-journey/`,
+    to: '/my-journey',
     image: asset('/images/michael.jpg'),
     x: 50,
     y: 16,
@@ -85,7 +92,7 @@ export const mapNodes: MapNode[] = [
     label: 'Family Photography',
     kicker: 'Portraits',
     hint: 'Weddings, portraits, real rooms',
-    href: `${site.live}/family-photography/`,
+    to: '/family-photography',
     image: asset('/images/family.jpg'),
     x: 18,
     y: 28,
@@ -96,7 +103,7 @@ export const mapNodes: MapNode[] = [
     label: 'Commercial',
     kicker: 'Studio',
     hint: 'Orgs who serve children',
-    href: `${site.live}/commercial-photography/`,
+    to: '/commercial-photography',
     image: asset('/images/jhec-cover.jpg'),
     x: 82,
     y: 28,
@@ -107,7 +114,7 @@ export const mapNodes: MapNode[] = [
     label: 'Filmmaking',
     kicker: 'Motion',
     hint: 'Documentary and promo',
-    href: `${site.live}/filmmaking/`,
+    to: '/filmmaking',
     image: asset('/images/garry.jpg'),
     x: 11,
     y: 47,
@@ -118,7 +125,7 @@ export const mapNodes: MapNode[] = [
     label: 'Docu Trailers',
     kicker: 'Short form',
     hint: 'Stories cut to the bone',
-    href: `${site.live}/documentary-trailers/`,
+    to: '/documentary-trailers',
     image: asset('/images/hancock.jpg'),
     x: 89,
     y: 47,
@@ -129,7 +136,7 @@ export const mapNodes: MapNode[] = [
     label: 'Classes',
     kicker: 'Schools',
     hint: 'The Art of Visual Storytelling',
-    href: `${site.live}/visual-storytelling/`,
+    to: '/classes',
     image: asset('/images/avs.jpg'),
     x: 17,
     y: 66,
@@ -140,7 +147,7 @@ export const mapNodes: MapNode[] = [
     label: 'Story Driven',
     kicker: 'The game',
     hint: "Unlocking writer's block",
-    href: site.storyDriven,
+    to: '/story-driven',
     image: asset('/images/story-cards.jpg'),
     x: 83,
     y: 66,
@@ -151,7 +158,7 @@ export const mapNodes: MapNode[] = [
     label: 'Books',
     kicker: 'Print',
     hint: 'I Found a Reason to Speak',
-    href: `${site.live}/ifoundareason/`,
+    to: '/books',
     image: asset('/images/book-ifound.jpg'),
     x: 28,
     y: 82,
@@ -162,7 +169,7 @@ export const mapNodes: MapNode[] = [
     label: 'Shop',
     kicker: 'Store',
     hint: 'Games and kits',
-    href: `${site.live}/store-2/`,
+    to: '/shop',
     image: asset('/images/story-board.png'),
     x: 72,
     y: 82,
@@ -173,7 +180,7 @@ export const mapNodes: MapNode[] = [
     label: 'Contact Me',
     kicker: 'Begin',
     hint: "Let's work together",
-    href: `${site.live}/contact/`,
+    to: '/contact',
     image: asset('/images/mccarter.jpg'),
     x: 50,
     y: 86,
