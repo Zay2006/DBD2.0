@@ -1,36 +1,33 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import { asset, nav, type NavItem } from '../data/site'
-
-const titles: Record<string, string> = {
-  '/': 'Driven by Design Creative Agency LLC - Multimedia Visual Storytelling',
-  '/my-journey': 'My Journey - Driven by Design',
-  '/classes': 'The Art of Visual Storytelling - Driven by Design',
-  '/story-driven': 'Story Driven - Driven by Design',
-  '/books': 'Books - Driven by Design',
-  '/filmmaking': 'Filmmaking - Driven by Design',
-  '/documentary-trailers': 'Documentary Trailers - Driven by Design',
-  '/family-photography': 'Family Photography - Driven by Design',
-  '/commercial-photography': 'Commercial Photography - Driven by Design',
-  '/testimonials': 'Testimonials - Driven by Design',
-  '/contact': 'Contact Me - Driven by Design',
-  '/shop': 'Shop - Driven by Design',
-  '/packages': 'Packages - Driven by Design',
-}
+import { asset, nav, site, type NavItem } from '../data/site'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
-    document.title = titles[pathname] ?? 'Driven by Design Creative Agency'
+    document.title =
+      pathname === '/'
+        ? 'Driven by Design Creative Agency LLC - Multimedia Visual Storytelling'
+        : 'Driven by Design Creative Agency'
   }, [pathname])
   return null
 }
 
+function isExternal(href: string) {
+  return !href.startsWith(site.live)
+}
+
 function NavLinkItem({ item, onClick }: { item: NavItem; onClick: () => void }) {
   if (item.href) {
+    const external = isExternal(item.href)
     return (
-      <a href={item.href} target="_blank" rel="noreferrer" onClick={onClick}>
+      <a
+        href={item.href}
+        target={external ? '_blank' : undefined}
+        rel={external ? 'noreferrer' : undefined}
+        onClick={onClick}
+      >
         {item.label}
       </a>
     )
@@ -86,16 +83,7 @@ function Header() {
   )
 }
 
-function Footer() {
-  return (
-    <footer className="orig-footer">
-      Driven by Design Creative Agency LLC. Copyright © 2017
-    </footer>
-  )
-}
-
 export default function Layout() {
-  const { pathname } = useLocation()
   return (
     <>
       <ScrollToTop />
@@ -104,7 +92,6 @@ export default function Layout() {
       </a>
       <Header />
       <Outlet />
-      {pathname === '/' ? null : <Footer />}
     </>
   )
 }
