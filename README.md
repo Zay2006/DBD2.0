@@ -24,4 +24,6 @@ npm run build
 npm run preview
 ```
 
+To put this mindmap on [dbdcreativeagency.com](https://dbdcreativeagency.com/) without moving the rest of the WordPress site, follow [WORDPRESS-HOMEPAGE.md](WORDPRESS-HOMEPAGE.md).
+
 Photographs and product images are Michael’s, drawn from the live studio archive.
